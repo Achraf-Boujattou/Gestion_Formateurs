@@ -24,6 +24,7 @@ const DashboardLayout = ({ children, role, name }) => {
                     {role === 'admin' && (
                         <>
                             <NavLink to="/admin/utilisateurs" className="nav-link">Utilisateurs</NavLink>
+                            <NavLink to="/admin/formations" className="nav-link">Formations</NavLink>
                             <NavLink to="/admin/parametres" className="nav-link">Paramètres</NavLink>
                         </>
                     )}

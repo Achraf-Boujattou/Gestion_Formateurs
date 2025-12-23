@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Login from './components/Login/Login';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import AdminFormations from './pages/Admin/Formations/AdminFormations';
 import FormateurDashboard from './pages/Formateur/FormateurDashboard';
 import AssistantDashboard from './pages/Assistant/AssistantDashboard';
 import './index.css';
@@ -72,7 +73,12 @@ function App() {
                     path="/admin/*"
                     element={
                         <PrivateRoute allowedRoles={['admin']}>
-                            <AdminDashboard />
+                            <Routes>
+                                <Route index element={<AdminDashboard />} />
+                                <Route path="formations" element={<AdminFormations />} />
+                                <Route path="utilisateurs" element={<div>Page Utilisateurs (A faire)</div>} />
+                                <Route path="parametres" element={<div>Page Paramètres (A faire)</div>} />
+                            </Routes>
                         </PrivateRoute>
                     }
                 />
