@@ -25,6 +25,78 @@
     background-color: var(--primary-hover);
 }
 
+/* Table Styles */
+.table-responsive {
+    overflow-x: auto;
+    background: var(--white);
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.formations-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.formations-table th,
+.formations-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.formations-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.formations-table tr:last-child td {
+    border-bottom: none;
+}
+
+.formations-table tr:hover {
+    background-color: #f9fafb;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-action {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-edit {
+    background-color: #eff6ff;
+    color: var(--primary-color);
+}
+
+.btn-edit:hover {
+    background-color: #dbeafe;
+}
+
+.btn-delete {
+    background-color: #fef2f2;
+    color: var(--error);
+}
+
+.btn-delete:hover {
+    background-color: #fee2e2;
+}
+
+/* Modal Styles reuse */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -60,47 +132,6 @@
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--text-secondary);
-}
-
-/* Reusing grid for list */
-.formations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.formation-card {
-    background: var(--white);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.formation-card:hover {
-    transform: translateY(-5px);
-}
-
-.formation-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-}
-
-.formation-details {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-}
-
-.formation-price {
-    font-weight: 700;
-    color: var(--success);
-    font-size: 1.125rem;
 }
 
 .textarea-field {

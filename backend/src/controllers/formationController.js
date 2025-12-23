@@ -3,7 +3,6 @@ const db = require('../config/db');
 exports.addFormation = (req, res) => {
     const { titre, nombre_heures, cout, objectifs, programme } = req.body;
 
-    // Simple validation
     if (!titre || !nombre_heures || !cout || !objectifs || !programme) {
         return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
     }
@@ -29,4 +28,37 @@ exports.getAllFormations = (req, res) => {
         }
         return res.json(data);
     });
+};
+
+exports.updateFormation = (req, res) => {
+    const { id } = req.params;
+    const { titre, nombre_heures, cout, objectifs, programme } = req.body; // Updated data
+
+    if (!titre || !nombre_heures || !cout || !objectifs || !programme) {
+        return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
+    }
+
+    const sql = "UPDATE formations SET titre=?, nombre_heures=?, cout=?, objectifs=?, programme=? WHERE id=?";
+    const values = [titre, nombre_heures, cout, objectifs, programme, id];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("Erreur modification formation:", err);
+            return res.status(500).json({ Error: "Erreur serveur update" });
+        }
+        return res.json({ Status: "Success", Message: "Formation mise à jour." });
+    })
+};
+
+exports.deleteFormation = (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM formations WHERE id=?";
+
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Erreur suppression formation:", err);
+            return res.status(500).json({ Error: "Erreur serveur delete" });
+        }
+        return res.json({ Status: "Success", Message: "Formation supprimée." });
+    })
 };

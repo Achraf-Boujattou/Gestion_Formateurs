@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminFormations.css';
 
@@ -7,6 +8,8 @@ const AdminFormations = () => {
     const name = localStorage.getItem('name') || 'Admin';
     const [formations, setFormations] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [currentId, setCurrentId] = useState(null);
     const [formData, setFormData] = useState({
         titre: '',
         nombre_heures: '',
@@ -31,21 +34,69 @@ const AdminFormations = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleOpenModal = () => {
+        setIsEditMode(false);
+        setFormData({ titre: '', nombre_heures: '', cout: '', objectifs: '', programme: '' });
+        setShowModal(true);
+    };
+
+    const handleEdit = (formation) => {
+        setIsEditMode(true);
+        setCurrentId(formation.id);
+        setFormData({
+            titre: formation.titre,
+            nombre_heures: formation.nombre_heures,
+            cout: formation.cout,
+            objectifs: formation.objectifs,
+            programme: formation.programme
+        });
+        setShowModal(true);
+    };
+
+    const handleDelete = (id) => {
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette formation ?")) {
+            const token = localStorage.getItem('token');
+            axios.delete(`http://localhost:8081/formations/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+                .then(res => {
+                    if (res.data.Status === "Success") {
+                        setMessage({ type: 'success', text: 'Formation supprimée.' });
+                        fetchFormations();
+                        setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+                    } else {
+                        setMessage({ type: 'error', text: res.data.Error });
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    setMessage({ type: 'error', text: "Erreur suppression." });
+                });
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token'); // Get token for auth
+        const token = localStorage.getItem('token');
 
-        axios.post('http://localhost:8081/formations', formData, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        let apiCall;
+        if (isEditMode) {
+            apiCall = axios.put(`http://localhost:8081/formations/${currentId}`, formData, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+        } else {
+            apiCall = axios.post('http://localhost:8081/formations', formData, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+        }
+
+        apiCall
             .then(res => {
                 if (res.data.Status === "Success") {
-                    setMessage({ type: 'success', text: 'Formation ajoutée avec succès !' });
+                    setMessage({ type: 'success', text: isEditMode ? 'Formation modifiée !' : 'Formation ajoutée !' });
                     setShowModal(false);
                     setFormData({ titre: '', nombre_heures: '', cout: '', objectifs: '', programme: '' });
-                    fetchFormations(); // Refresh list
-
-                    // Clear message after 3 seconds
+                    fetchFormations();
                     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
                 } else {
                     setMessage({ type: 'error', text: res.data.Error });
@@ -53,7 +104,7 @@ const AdminFormations = () => {
             })
             .catch(err => {
                 console.error(err);
-                setMessage({ type: 'error', text: "Erreur lors de l'ajout." });
+                setMessage({ type: 'error', text: "Erreur lors de l'opération." });
             });
     };
 
@@ -62,7 +113,7 @@ const AdminFormations = () => {
             <div className="formations-container">
                 <div className="formations-header">
                     <h2>Gestion des Formations</h2>
-                    <button className="add-btn" onClick={() => setShowModal(true)}>
+                    <button className="add-btn" onClick={handleOpenModal}>
                         + Nouvelle Formation
                     </button>
                 </div>
@@ -73,28 +124,51 @@ const AdminFormations = () => {
                     </div>
                 )}
 
-                <div className="formations-grid">
-                    {formations.map(formation => (
-                        <div key={formation.id} className="formation-card">
-                            <div>
-                                <h3 className="formation-title">{formation.titre}</h3>
-                                <p className="formation-details">{formation.nombre_heures} Heures</p>
-                                <p className="formation-details" style={{ fontSize: '0.9rem', margin: '10px 0' }}>
-                                    {formation.objectifs.substring(0, 100)}...
-                                </p>
-                            </div>
-                            <div className="formation-price">{formation.cout} €</div>
-                        </div>
-                    ))}
-                    {formations.length === 0 && <p>Aucune formation publique pour le moment.</p>}
+                <div className="table-responsive">
+                    <table className="formations-table">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Heures</th>
+                                <th>Coût (€)</th>
+                                <th>Objectifs</th>
+                                <th style={{ textAlign: 'right' }}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {formations.map(formation => (
+                                <tr key={formation.id}>
+                                    <td><strong>{formation.titre}</strong></td>
+                                    <td>{formation.nombre_heures} h</td>
+                                    <td>{formation.cout} €</td>
+                                    <td>{formation.objectifs.substring(0, 50)}...</td>
+                                    <td>
+                                        <div className="actions-cell" style={{ justifyContent: 'flex-end' }}>
+                                            <button className="btn-action btn-edit" onClick={() => handleEdit(formation)} title="Modifier">
+                                                <FaEdit size={16} />
+                                            </button>
+                                            <button className="btn-action btn-delete" onClick={() => handleDelete(formation.id)} title="Supprimer">
+                                                <FaTrash size={16} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                            {formations.length === 0 && (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: 'center', color: '#6b7280' }}>Aucune formation trouvée.</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
 
-                {/* Modal for Adding Formation */}
+                {/* Modal for Adding/Editing Formation */}
                 {showModal && (
                     <div className="modal-overlay">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h3>Ajouter une Formation</h3>
+                                <h3>{isEditMode ? 'Modifier la Formation' : 'Ajouter une Formation'}</h3>
                                 <button className="close-btn" onClick={() => setShowModal(false)}>&times;</button>
                             </div>
                             <form onSubmit={handleSubmit}>
@@ -155,7 +229,9 @@ const AdminFormations = () => {
                                 </div>
                                 <div className="modal-actions">
                                     <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
-                                    <button type="submit" className="btn-primary" style={{ marginTop: 0 }}>Enregistrer</button>
+                                    <button type="submit" className="btn-primary" style={{ marginTop: 0 }}>
+                                        {isEditMode ? 'Modifier' : 'Enregistrer'}
+                                    </button>
                                 </div>
                             </form>
                         </div>

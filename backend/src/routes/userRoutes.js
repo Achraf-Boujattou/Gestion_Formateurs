@@ -7,4 +7,13 @@ const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
 // Protect this route: only logged in Admins can see all users
 router.get('/', verifyToken, isAdmin, userController.getAllUsers);
 
+// Create User
+router.post('/', verifyToken, isAdmin, userController.createUser);
+
+// Update User
+router.put('/:id', verifyToken, isAdmin, userController.updateUser);
+
+// Delete User
+router.delete('/:id', verifyToken, isAdmin, userController.deleteUser);
+
 module.exports = router;
