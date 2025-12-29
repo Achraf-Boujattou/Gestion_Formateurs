@@ -5,7 +5,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import './AdminUsers.css';
 
 const AdminUsers = () => {
-    const name = localStorage.getItem('name') || 'Admin';
+    const name = sessionStorage.getItem('name') || 'Admin';
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +17,9 @@ const AdminUsers = () => {
         prenom: '',
         email: '',
         password: '',
-        role: 'admin'
+        role: 'admin',
+        competences: '',
+        remarques: ''
     });
     const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -26,7 +28,7 @@ const AdminUsers = () => {
     const itemsPerPage = 5;
 
     const fetchUsers = () => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         axios.get('http://localhost:8081/utilisateurs', {
             headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -67,7 +69,7 @@ const AdminUsers = () => {
 
     const handleOpenModal = () => {
         setIsEditMode(false);
-        setFormData({ nom: '', prenom: '', email: '', password: '', role: 'formateur' });
+        setFormData({ nom: '', prenom: '', email: '', password: '', role: 'formateur', competences: '', remarques: '' });
         setShowModal(true);
     };
 
@@ -79,14 +81,16 @@ const AdminUsers = () => {
             prenom: user.prenom,
             email: user.email,
             password: '', // Don't show password
-            role: user.role
+            role: user.role,
+            competences: user.competences || '',
+            remarques: user.remarques || ''
         });
         setShowModal(true);
     };
 
     const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
             axios.delete(`http://localhost:8081/utilisateurs/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
@@ -108,7 +112,7 @@ const AdminUsers = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
 
         let apiCall;
         if (isEditMode) {
@@ -253,6 +257,18 @@ const AdminUsers = () => {
                                     <label className="form-label">Mot de passe {isEditMode && '(Laisser vide pour ne pas changer)'}</label>
                                     <input type="password" name="password" className="form-input" value={formData.password} onChange={handleChange} required={!isEditMode} />
                                 </div>
+                                {formData.role === 'formateur' && (
+                                    <>
+                                        <div className="form-group">
+                                            <label className="form-label">Compétences</label>
+                                            <textarea name="competences" className="form-input" value={formData.competences} onChange={handleChange} rows="3" placeholder="Ex: React, Java, SQL..."></textarea>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Remarques</label>
+                                            <textarea name="remarques" className="form-input" value={formData.remarques} onChange={handleChange} rows="3"></textarea>
+                                        </div>
+                                    </>
+                                )}
                                 <div className="modal-actions">
                                     <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
                                     <button type="submit" className="btn-primary" style={{ marginTop: 0 }}>Enregistrer</button>

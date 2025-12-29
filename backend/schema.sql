@@ -17,3 +17,15 @@ CREATE TABLE IF NOT EXISTS formations (
     programme TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS formateur (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    utilisateur_id INT NOT NULL UNIQUE,
+    competences TEXT NOT NULL COMMENT 'Mots-clés des compétences',
+    remarques TEXT NULL COMMENT 'Remarques optionnelles',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_formateur_utilisateur 
+        FOREIGN KEY (utilisateur_id) 
+        REFERENCES utilisateurs(id) 
+        ON DELETE CASCADE
+) ENGINE=InnoDB;

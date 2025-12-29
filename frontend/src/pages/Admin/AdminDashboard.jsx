@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-    const name = localStorage.getItem('name') || 'Admin';
+    const name = sessionStorage.getItem('name') || 'Admin';
 
     return (
         <DashboardLayout role="admin" name={name}>

@@ -16,10 +16,10 @@ const Login = ({ setAuth }) => {
         axios.post('http://localhost:8081/login', values)
             .then(res => {
                 if (res.data.Status === "Success") {
-                    // Save auth info
-                    localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('role', res.data.role);
-                    localStorage.setItem('name', res.data.name);
+                    // Save auth info in sessionStorage
+                    sessionStorage.setItem('token', res.data.token);
+                    sessionStorage.setItem('role', res.data.role);
+                    sessionStorage.setItem('name', res.data.name);
 
                     // Update parent state
                     setAuth({

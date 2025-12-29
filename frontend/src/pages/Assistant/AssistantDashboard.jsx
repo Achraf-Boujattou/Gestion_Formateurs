@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './AssistantDashboard.css';
 
 const AssistantDashboard = () => {
-    const name = localStorage.getItem('name') || 'Assistant';
+    const name = sessionStorage.getItem('name') || 'Assistant';
 
     return (
         <DashboardLayout role="assistant" name={name}>

@@ -5,7 +5,7 @@ import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout
 import './AdminFormations.css';
 
 const AdminFormations = () => {
-    const name = localStorage.getItem('name') || 'Admin';
+    const name = sessionStorage.getItem('name') || 'Admin';
     const [formations, setFormations] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -55,7 +55,7 @@ const AdminFormations = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette formation ?")) {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
             axios.delete(`http://localhost:8081/formations/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
@@ -77,7 +77,7 @@ const AdminFormations = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
 
         let apiCall;
         if (isEditMode) {

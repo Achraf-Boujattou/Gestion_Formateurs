@@ -18,10 +18,11 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check local storage on load
-        const token = localStorage.getItem('token');
-        const role = localStorage.getItem('role');
-        const name = localStorage.getItem('name');
+        // Use sessionStorage instead of localStorage: 
+        // Persists on Refresh (F5) but clears when tab/browser is closed.
+        const token = sessionStorage.getItem('token');
+        const role = sessionStorage.getItem('role');
+        const name = sessionStorage.getItem('name');
 
         if (token && role) {
             setAuth({
@@ -56,8 +57,8 @@ function App() {
                     path="/"
                     element={
                         !auth.isAuthenticated ?
-                            <Navigate to="/login" /> :
-                            <Navigate to={`/${auth.role}`} />
+                            <Navigate to="/login" replace /> :
+                            <Navigate to={`/${auth.role}`} replace />
                     }
                 />
 
@@ -66,7 +67,7 @@ function App() {
                     element={
                         !auth.isAuthenticated ?
                             <Login setAuth={setAuth} /> :
-                            <Navigate to={`/${auth.role}`} />
+                            <Navigate to={`/${auth.role}`} replace />
                     }
                 />
 
@@ -102,7 +103,7 @@ function App() {
                     }
                 />
 
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
         </BrowserRouter>
     );

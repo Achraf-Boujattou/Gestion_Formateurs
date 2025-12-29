@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './FormateurDashboard.css';
 
 const FormateurDashboard = () => {
-    const name = localStorage.getItem('name') || 'Formateur';
+    const name = sessionStorage.getItem('name') || 'Formateur';
 
     return (
         <DashboardLayout role="formateur" name={name}>

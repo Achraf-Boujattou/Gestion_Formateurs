@@ -6,7 +6,7 @@ const DashboardLayout = ({ children, role, name }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.clear();
+        sessionStorage.clear();
         navigate('/');
         window.location.reload(); // Quick way to reset state
     };

@@ -2,7 +2,7 @@ const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 exports.getAllUsers = (req, res) => {
-    const sql = "SELECT id, nom, prenom, email, role, created_at FROM utilisateurs WHERE role != 'admin' ORDER BY created_at DESC";
+    const sql = "SELECT u.id, u.nom, u.prenom, u.email, u.role, u.created_at, f.competences, f.remarques FROM utilisateurs u LEFT JOIN formateur f ON u.id = f.utilisateur_id WHERE u.role != 'admin' ORDER BY u.created_at DESC";
     db.query(sql, (err, data) => {
         if (err) return res.status(500).json(err);
         return res.json(data);
@@ -28,7 +28,20 @@ exports.createUser = async (req, res) => {
 
             db.query(sql, [nom, prenom, email, hashedPassword, role], (err, result) => {
                 if (err) return res.status(500).json({ Error: "Erreur lors de la création de l'utilisateur" });
-                return res.json({ Status: "Success", Message: "Utilisateur créé avec succès." });
+
+                if (role === 'formateur') {
+                    const { competences, remarques } = req.body;
+                    const sqlFormateur = "INSERT INTO formateur (utilisateur_id, competences, remarques) VALUES (?, ?, ?)";
+                    db.query(sqlFormateur, [result.insertId, competences || '', remarques || ''], (errF, resultF) => {
+                        if (errF) {
+                            console.error(errF);
+                            return res.status(500).json({ Error: "Utilisateur créé mais erreur formateur." });
+                        }
+                        return res.json({ Status: "Success", Message: "Formateur créé avec succès." });
+                    });
+                } else {
+                    return res.json({ Status: "Success", Message: "Utilisateur créé avec succès." });
+                }
             });
         });
     } catch (error) {
@@ -61,7 +74,21 @@ exports.updateUser = async (req, res) => {
             if (err.code === 'ER_DUP_ENTRY') return res.status(400).json({ Error: "Cet email est déjà pris." });
             return res.status(500).json({ Error: "Erreur lors de la mise à jour." });
         }
-        return res.json({ Status: "Success", Message: "Utilisateur mis à jour." });
+
+        if (role === 'formateur') {
+            const { competences, remarques } = req.body;
+            const sqlFormateur = "INSERT INTO formateur (utilisateur_id, competences, remarques) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE competences = VALUES(competences), remarques = VALUES(remarques)";
+            db.query(sqlFormateur, [id, competences || '', remarques || ''], (errF, resultF) => {
+                if (errF) return res.status(500).json({ Error: "Erreur lors de la mise à jour des infos formateur." });
+                return res.json({ Status: "Success", Message: "Formateur mis à jour." });
+            });
+        } else {
+            // If role changed from formateur, remove the entry
+            const sqlDeleteFormateur = "DELETE FROM formateur WHERE utilisateur_id = ?";
+            db.query(sqlDeleteFormateur, [id], () => {
+                return res.json({ Status: "Success", Message: "Utilisateur mis à jour." });
+            });
+        }
     });
 };
 
