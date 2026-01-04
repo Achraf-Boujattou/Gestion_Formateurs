@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
+import { FiEdit2, FiTrash2, FiSearch, FiPlus, FiUserPlus, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminUsers.css';
 
@@ -146,24 +146,31 @@ const AdminUsers = () => {
         <DashboardLayout role="admin" name={name}>
             <div className="users-container">
                 <div className="users-header">
-                    <h2>Gestion des Utilisateurs</h2>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        <input
-                            type="text"
-                            className="search-bar"
-                            placeholder="Rechercher un utilisateur..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                    <div className="title-section">
+                        <h2>Gestion des Utilisateurs</h2>
+                        <p>Consultez et gérez les accès de vos collaborateurs</p>
+                    </div>
+                    <div className="header-actions">
+                        <div className="search-wrapper">
+                            <FiSearch className="search-icon" />
+                            <input
+                                type="text"
+                                className="search-bar"
+                                placeholder="Rechercher..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
                         <button className="add-btn" onClick={handleOpenModal}>
-                            + Nouvel Utilisateur
+                            <FiPlus /> Nouvel Utilisateur
                         </button>
                     </div>
                 </div>
 
                 {message.text && (
-                    <div className={`error-message`} style={{ backgroundColor: message.type === 'success' ? '#d1fae5' : '#fee2e2', color: message.type === 'success' ? '#065f46' : '#991b1b' }}>
-                        {message.text}
+                    <div className={`status-alert ${message.type}`}>
+                        {message.type === 'success' ? <FiCheckCircle /> : <FiAlertCircle />}
+                        <span>{message.text}</span>
                     </div>
                 )}
 
@@ -188,12 +195,12 @@ const AdminUsers = () => {
                                         </span>
                                     </td>
                                     <td>
-                                        <div className="actions-cell" style={{ justifyContent: 'flex-end' }}>
-                                            <button className="btn-action btn-edit" onClick={() => handleEdit(user)} title="Modifier">
-                                                <FaEdit size={16} />
+                                        <div className="actions-cell">
+                                            <button className="btn-action btn-edit" onClick={() => handleEdit(user)} title="Modifier l'utilisateur">
+                                                <FiEdit2 />
                                             </button>
-                                            <button className="btn-action btn-delete" onClick={() => handleDelete(user.id)} title="Supprimer">
-                                                <FaTrash size={16} />
+                                            <button className="btn-action btn-delete" onClick={() => handleDelete(user.id)} title="Supprimer l'utilisateur">
+                                                <FiTrash2 />
                                             </button>
                                         </div>
                                     </td>

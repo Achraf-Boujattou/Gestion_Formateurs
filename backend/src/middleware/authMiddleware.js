@@ -39,3 +39,11 @@ exports.isFormateur = (req, res, next) => {
         return res.status(403).json({ Error: "Accès refusé. Rôle Formateur requis." });
     }
 };
+
+exports.isAdminOrAssistant = (req, res, next) => {
+    if (req.user && (req.user.role === 'admin' || req.user.role === 'assistant')) {
+        next();
+    } else {
+        return res.status(403).json({ Error: "Accès refusé. Rôle Admin ou Assistant requis." });
+    }
+};

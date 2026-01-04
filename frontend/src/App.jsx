@@ -6,6 +6,7 @@ import AdminFormations from './pages/Admin/Formations/AdminFormations';
 import AdminUsers from './pages/Admin/Users/AdminUsers';
 import FormateurDashboard from './pages/Formateur/FormateurDashboard';
 import AssistantDashboard from './pages/Assistant/AssistantDashboard';
+import Entreprises from './pages/Common/Entreprises/Entreprises';
 import './index.css';
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
                                 <Route index element={<AdminDashboard />} />
                                 <Route path="formations" element={<AdminFormations />} />
                                 <Route path="utilisateurs" element={<AdminUsers />} />
+                                <Route path="entreprises" element={<Entreprises />} />
                                 <Route path="parametres" element={<div>Page Paramètres (A faire)</div>} />
                             </Routes>
                         </PrivateRoute>
@@ -98,7 +100,10 @@ function App() {
                     path="/assistant/*"
                     element={
                         <PrivateRoute allowedRoles={['assistant']}>
-                            <AssistantDashboard />
+                            <Routes>
+                                <Route index element={<AssistantDashboard />} />
+                                <Route path="entreprises" element={<Entreprises />} />
+                            </Routes>
                         </PrivateRoute>
                     }
                 />

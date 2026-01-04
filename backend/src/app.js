@@ -4,6 +4,7 @@ const authController = require('./controllers/authController');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const formationRoutes = require('./routes/formationRoutes');
+const entrepriseRoutes = require('./routes/entrepriseRoutes');
 
 // Initialize Admin
 authController.createDefaultAdmin();
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/', authRoutes); // Exposes /login
 app.use('/utilisateurs', userRoutes); // Exposes /utilisateurs
 app.use('/formations', formationRoutes); // Exposes /formations
+app.use('/entreprises', entrepriseRoutes); // Exposes /entreprises
 
 // Basic route to check if API is working
 app.get('/', (req, res) => {

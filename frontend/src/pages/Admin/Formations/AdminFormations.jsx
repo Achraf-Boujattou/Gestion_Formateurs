@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FiEdit2, FiTrash2, FiPlus, FiBook, FiCheckCircle, FiAlertCircle, FiClock, FiDollarSign } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminFormations.css';
 
@@ -112,15 +112,19 @@ const AdminFormations = () => {
         <DashboardLayout role="admin" name={name}>
             <div className="formations-container">
                 <div className="formations-header">
-                    <h2>Gestion des Formations</h2>
+                    <div className="title-section">
+                        <h2>Gestion des Formations</h2>
+                        <p>Catalogue des programmes et modules pédagogiques</p>
+                    </div>
                     <button className="add-btn" onClick={handleOpenModal}>
-                        + Nouvelle Formation
+                        <FiPlus /> Nouvelle Formation
                     </button>
                 </div>
 
                 {message.text && (
-                    <div className={`error-message`} style={{ backgroundColor: message.type === 'success' ? '#d1fae5' : '#fee2e2', color: message.type === 'success' ? '#065f46' : '#991b1b' }}>
-                        {message.text}
+                    <div className={`status-alert ${message.type}`}>
+                        {message.type === 'success' ? <FiCheckCircle /> : <FiAlertCircle />}
+                        <span>{message.text}</span>
                     </div>
                 )}
 
@@ -138,17 +142,25 @@ const AdminFormations = () => {
                         <tbody>
                             {formations.map(formation => (
                                 <tr key={formation.id}>
-                                    <td><strong>{formation.titre}</strong></td>
-                                    <td>{formation.nombre_heures} h</td>
-                                    <td>{formation.cout} €</td>
-                                    <td>{formation.objectifs.substring(0, 50)}...</td>
                                     <td>
-                                        <div className="actions-cell" style={{ justifyContent: 'flex-end' }}>
+                                        <div className="formation-info">
+                                            <strong>{formation.titre}</strong>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="val-badge"><FiClock /> {formation.nombre_heures}h</div>
+                                    </td>
+                                    <td>
+                                        <div className="val-badge price"><FiDollarSign /> {formation.cout}€</div>
+                                    </td>
+                                    <td><p className="goal-text">{formation.objectifs.substring(0, 50)}...</p></td>
+                                    <td>
+                                        <div className="actions-cell">
                                             <button className="btn-action btn-edit" onClick={() => handleEdit(formation)} title="Modifier">
-                                                <FaEdit size={16} />
+                                                <FiEdit2 />
                                             </button>
                                             <button className="btn-action btn-delete" onClick={() => handleDelete(formation.id)} title="Supprimer">
-                                                <FaTrash size={16} />
+                                                <FiTrash2 />
                                             </button>
                                         </div>
                                     </td>

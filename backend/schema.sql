@@ -29,3 +29,13 @@ CREATE TABLE IF NOT EXISTS formateur (
         REFERENCES utilisateurs(id) 
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS entreprises (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    adresse TEXT,
+    telephone VARCHAR(20),
+    site_web VARCHAR(255),
+    email VARCHAR(150),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

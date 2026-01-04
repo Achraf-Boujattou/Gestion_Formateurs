@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiClock, FiFileText, FiList, FiCheckCircle } from 'react-icons/fi';
 import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './AssistantDashboard.css';
 
@@ -9,17 +10,26 @@ const AssistantDashboard = () => {
         <DashboardLayout role="assistant" name={name}>
             <div className="stats-grid">
                 <div className="stat-card">
-                    <div className="stat-value">12</div>
-                    <div className="stat-label">Demandes en attente</div>
+                    <div className="stat-icon-wrapper pending"><FiClock /></div>
+                    <div className="stat-info">
+                        <div className="stat-value">12</div>
+                        <div className="stat-label">Demandes en attente</div>
+                    </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-value">3</div>
-                    <div className="stat-label">Rapports à valider</div>
+                    <div className="stat-icon-wrapper reports"><FiFileText /></div>
+                    <div className="stat-info">
+                        <div className="stat-value">3</div>
+                        <div className="stat-label">Rapports à valider</div>
+                    </div>
                 </div>
             </div>
-            <div style={{ background: 'white', padding: '2rem', borderRadius: '1rem', minHeight: '300px' }}>
-                <h3>Tâches Administratives</h3>
-                <p style={{ color: '#6b7280', marginTop: '1rem' }}>Toutes les tâches urgentes ont été traitées.</p>
+            <div className="dashboard-content">
+                <div className="content-header">
+                    <FiList className="section-icon" />
+                    <h3>Tâches Administratives</h3>
+                </div>
+                <p className="no-data">Toutes les tâches urgentes ont été traitées.</p>
             </div>
         </DashboardLayout>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiUsers, FiBook, FiActivity } from 'react-icons/fi';
 import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './AdminDashboard.css';
 
@@ -9,22 +10,31 @@ const AdminDashboard = () => {
         <DashboardLayout role="admin" name={name}>
             <div className="stats-grid">
                 <div className="stat-card">
-                    <div className="stat-value">124</div>
-                    <div className="stat-label">Utilisateurs Totaux</div>
+                    <div className="stat-icon-wrapper users"><FiUsers /></div>
+                    <div className="stat-info">
+                        <div className="stat-value">124</div>
+                        <div className="stat-label">Utilisateurs Totaux</div>
+                    </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-value">15</div>
-                    <div className="stat-label">Formateurs</div>
+                    <div className="stat-icon-wrapper formateurs"><FiBook /></div>
+                    <div className="stat-info">
+                        <div className="stat-value">15</div>
+                        <div className="stat-label">Formateurs</div>
+                    </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-value">8</div>
-                    <div className="stat-label">Sessions Actives</div>
+                    <div className="stat-icon-wrapper active"><FiActivity /></div>
+                    <div className="stat-info">
+                        <div className="stat-value">8</div>
+                        <div className="stat-label">Sessions Actives</div>
+                    </div>
                 </div>
             </div>
             {/* Content placeholder */}
-            <div style={{ background: 'white', padding: '2rem', borderRadius: '1rem', minHeight: '300px' }}>
+            <div className="dashboard-content">
                 <h3>Activité Récente</h3>
-                <p style={{ color: '#6b7280', marginTop: '1rem' }}>Aucune activité récente à afficher.</p>
+                <p>Aucune activité récente à afficher.</p>
             </div>
         </DashboardLayout>
     );
