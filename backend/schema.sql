@@ -39,3 +39,22 @@ CREATE TABLE IF NOT EXISTS entreprises (
     email VARCHAR(150),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS planifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    formation_id INT NOT NULL,
+    formateur_id INT NOT NULL,
+    entreprise_id INT NOT NULL,
+    status ENUM('prevu', 'termine', 'annule') DEFAULT 'prevu',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (formation_id) REFERENCES formations(id) ON DELETE CASCADE,
+    FOREIGN KEY (formateur_id) REFERENCES formateur(id) ON DELETE CASCADE,
+    FOREIGN KEY (entreprise_id) REFERENCES entreprises(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS planification_dates (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    planification_id INT NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (planification_id) REFERENCES planifications(id) ON DELETE CASCADE
+) ENGINE=InnoDB;

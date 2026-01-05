@@ -7,6 +7,7 @@ import AdminUsers from './pages/Admin/Users/AdminUsers';
 import FormateurDashboard from './pages/Formateur/FormateurDashboard';
 import AssistantDashboard from './pages/Assistant/AssistantDashboard';
 import Entreprises from './pages/Common/Entreprises/Entreprises';
+import Planning from './pages/Common/Planning/Planning';
 import './index.css';
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
                                 <Route path="formations" element={<AdminFormations />} />
                                 <Route path="utilisateurs" element={<AdminUsers />} />
                                 <Route path="entreprises" element={<Entreprises />} />
+                                <Route path="planning" element={<Planning />} />
                                 <Route path="parametres" element={<div>Page Paramètres (A faire)</div>} />
                             </Routes>
                         </PrivateRoute>
@@ -103,6 +105,7 @@ function App() {
                             <Routes>
                                 <Route index element={<AssistantDashboard />} />
                                 <Route path="entreprises" element={<Entreprises />} />
+                                <Route path="planning" element={<Planning />} />
                             </Routes>
                         </PrivateRoute>
                     }
