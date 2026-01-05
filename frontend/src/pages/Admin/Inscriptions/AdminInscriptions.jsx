@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiCheckCircle, FiXCircle, FiClock, FiPhone, FiMail, FiMapPin, FiCalendar } from 'react-icons/fi';
+import { FiCheckCircle, FiXCircle, FiClock, FiPhone, FiMail, FiMapPin, FiCalendar, FiSearch } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminInscriptions.css';
 
 const AdminInscriptions = () => {
     const name = sessionStorage.getItem('name') || 'Admin';
     const [inscriptions, setInscriptions] = useState([]);
+    const [filteredInscriptions, setFilteredInscriptions] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchInscriptions();
     }, []);
+
+    useEffect(() => {
+        const results = inscriptions.filter(inscr =>
+            inscr.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            inscr.prenom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            inscr.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (inscr.formation_titre && inscr.formation_titre.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+        setFilteredInscriptions(results);
+    }, [searchTerm, inscriptions]);
 
     const fetchInscriptions = async () => {
         try {
@@ -20,6 +32,7 @@ const AdminInscriptions = () => {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setInscriptions(res.data);
+            setFilteredInscriptions(res.data);
         } catch (err) {
             console.error(err);
         } finally {
@@ -42,13 +55,25 @@ const AdminInscriptions = () => {
     return (
         <DashboardLayout role="admin" name={name}>
             <div className="inscriptions-container">
-                <div className="title-section">
-                    <h2>Inscriptions Publiques</h2>
-                    <p>Gérez les demandes d'inscription des individus aux formations</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div className="title-section">
+                        <h2>Inscriptions Publiques</h2>
+                        <p>Gérez les demandes d'inscription des individus aux formations</p>
+                    </div>
+                    <div className="search-wrapper">
+                        <FiSearch className="search-icon" />
+                        <input
+                            type="text"
+                            className="search-bar-premium"
+                            placeholder="Rechercher un inscrit..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
                 </div>
 
                 <div className="inscriptions-grid">
-                    {inscriptions.map(inscr => (
+                    {filteredInscriptions.map(inscr => (
                         <div key={inscr.id} className="inscription-card card-premium">
                             <div className="inscr-status-badge" data-status={inscr.status}>
                                 {inscr.status === 'valide' ? <FiCheckCircle /> : inscr.status === 'annule' ? <FiXCircle /> : <FiClock />}

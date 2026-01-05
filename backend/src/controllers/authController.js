@@ -1,15 +1,31 @@
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { isValidEmail, sanitizeString } = require('../utils/validation');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'votre_secret_super_securise';
 
 exports.login = (req, res) => {
+    const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+        return res.status(400).json({ Error: "Email et mot de passe requis" });
+    }
+
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ Error: "Format d'email invalide" });
+    }
+
     const sql = "SELECT * FROM utilisateurs WHERE email = ?";
-    db.query(sql, [req.body.email], async (err, data) => {
-        if (err) return res.status(500).json({ Error: "Erreur serveur login" });
+    db.query(sql, [email], async (err, data) => {
+        if (err) {
+            console.error("Erreur login:", err);
+            return res.status(500).json({ Error: "Erreur serveur login" });
+        }
+
         if (data.length > 0) {
-            const match = await bcrypt.compare(req.body.password, data[0].password);
+            const match = await bcrypt.compare(password, data[0].password);
             if (match) {
                 const name = data[0].prenom + ' ' + data[0].nom;
                 const token = jwt.sign({ id: data[0].id, name, role: data[0].role }, JWT_SECRET, { expiresIn: '1d' });
@@ -30,19 +46,38 @@ exports.register = async (req, res) => {
         return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
     }
 
+    // Validation email
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ Error: "Format d'email invalide." });
+    }
+
+    // Validation password
+    if (password.length < 6) {
+        return res.status(400).json({ Error: "Le mot de passe doit contenir au moins 6 caractères." });
+    }
+
     try {
         const checkSql = "SELECT * FROM utilisateurs WHERE email = ?";
         db.query(checkSql, [email], async (err, data) => {
+            if (err) {
+                console.error("Erreur vérification email:", err);
+                return res.status(500).json({ Error: "Erreur serveur." });
+            }
+
             if (data.length > 0) return res.status(400).json({ Error: "Email déjà utilisé." });
 
             const hashedPassword = await bcrypt.hash(password, 10);
             const sql = "INSERT INTO utilisateurs (nom, prenom, email, password, role) VALUES (?, ?, ?, ?, 'formateur')";
-            db.query(sql, [nom, prenom, email, hashedPassword], (err, result) => {
-                if (err) return res.status(500).json({ Error: "Erreur lors de la création du compte." });
+            db.query(sql, [sanitizeString(nom), sanitizeString(prenom), email, hashedPassword], (err, result) => {
+                if (err) {
+                    console.error("Erreur création compte:", err);
+                    return res.status(500).json({ Error: "Erreur lors de la création du compte." });
+                }
                 return res.json({ Status: "Success", Message: "Compte créé avec succès ! Connectez-vous." });
             });
         });
     } catch (err) {
+        console.error("Erreur register:", err);
         res.status(500).json({ Error: "Erreur serveur" });
     }
 };

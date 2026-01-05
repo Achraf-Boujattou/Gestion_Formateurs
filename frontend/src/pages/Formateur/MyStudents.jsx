@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { FiUsers, FiMail, FiPhone, FiBook } from 'react-icons/fi';
 import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './TrainerPages.css';
@@ -10,10 +10,7 @@ const MyStudents = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        axios.get('http://localhost:8081/groupes/my-students', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        api.get('/groupes/my-students')
             .then(res => {
                 setStudents(res.data);
                 setLoading(false);
@@ -35,7 +32,7 @@ const MyStudents = () => {
                 {loading ? (
                     <div className="loading-spinner">Chargement...</div>
                 ) : (
-                    <div className="table-wrapper card-premium">
+                    <div className="trainer-table-container">
                         <table className="trainer-table">
                             <thead>
                                 <tr>
@@ -50,7 +47,7 @@ const MyStudents = () => {
                                     <tr key={idx}>
                                         <td>
                                             <div className="student-info">
-                                                <strong>{student.nom} {student.prenom}</strong>
+                                                <strong style={{ fontSize: '1.1rem', color: 'var(--text-main)' }}>{student.nom} {student.prenom}</strong>
                                             </div>
                                         </td>
                                         <td>
@@ -61,15 +58,17 @@ const MyStudents = () => {
                                         </td>
                                         <td>
                                             <div className="course-ref">
-                                                <FiBook />
+                                                <FiBook style={{ fontSize: '1.2rem', color: 'var(--primary)', marginTop: '0.25rem' }} />
                                                 <div>
-                                                    <strong>{student.formation_titre}</strong>
-                                                    <p>{student.nom_groupe}</p>
+                                                    <strong style={{ color: 'var(--text-main)' }}>{student.formation_titre}</strong>
+                                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600 }}>{student.nom_groupe}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <span className={`type-badge ${student.type}`}>{student.type}</span>
+                                            <span className={`type-badge-premium ${student.type === 'Par-Entreprise' ? 'badge-entreprise' : 'badge-individuel'}`}>
+                                                {student.type}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}

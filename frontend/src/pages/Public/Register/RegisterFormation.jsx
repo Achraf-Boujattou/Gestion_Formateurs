@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../services/api';
 import { FiArrowLeft, FiUser, FiMail, FiPhone, FiMapPin, FiCalendar, FiCheckCircle, FiAlertCircle, FiSend } from 'react-icons/fi';
 import './RegisterFormation.css';
 
@@ -21,7 +21,7 @@ const RegisterFormation = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/formations/${id}`)
+        api.get(`/formations/${id}`)
             .then(res => setFormation(res.data))
             .catch(err => console.error(err));
     }, [id]);
@@ -32,15 +32,23 @@ const RegisterFormation = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validation téléphone simple
+        const simplePhoneRegex = /^[0-9\+\s]{10,15}$/;
+        if (!simplePhoneRegex.test(formData.telephone)) {
+            setMessage({ type: 'error', text: "Le format du numéro de téléphone semble invalide." });
+            return;
+        }
+
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:8081/inscriptions/public', formData);
+            const res = await api.post('/inscriptions/public', formData);
             if (res.data.Status === "Success") {
                 setMessage({ type: 'success', text: "Inscription réussie ! Vous allez être redirigé vers l'accueil." });
                 setTimeout(() => navigate('/'), 3000);
             }
         } catch (err) {
-            setMessage({ type: 'error', text: err.response?.data?.Error || "Une erreur est survenue." });
+            setMessage({ type: 'error', text: err.userMessage || "Une erreur est survenue." });
         } finally {
             setLoading(false);
         }

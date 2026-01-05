@@ -1,3 +1,4 @@
+/* --- Admin Candidatures Modern Styles --- */
 .candidatures-container {
     display: flex;
     flex-direction: column;
@@ -11,9 +12,20 @@
 }
 
 .cand-card {
+    background: white;
+    border-radius: var(--radius-xl);
     padding: 2rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-light);
     position: relative;
     overflow: hidden;
+    transition: var(--transition);
+}
+
+.cand-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float);
+    border-color: var(--primary-light);
 }
 
 .cand-status {
@@ -27,22 +39,22 @@
     font-weight: 800;
     text-transform: uppercase;
     padding: 0.4rem 0.75rem;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
 }
 
 .cand-status[data-status='en_attente'] {
-    background: #fff7ed;
-    color: #c2410c;
+    background: var(--warning-bg);
+    color: var(--warning);
 }
 
 .cand-status[data-status='valide'] {
-    background: #f0fdf4;
-    color: #15803d;
+    background: var(--success-bg);
+    color: var(--success);
 }
 
 .cand-status[data-status='refuse'] {
-    background: #fef2f2;
-    color: #b91c1c;
+    background: var(--danger-bg);
+    color: var(--danger);
 }
 
 .cand-header {
@@ -55,24 +67,26 @@
 .cand-avatar {
     width: 3.5rem;
     height: 3.5rem;
-    background: var(--accent-gradient);
+    background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
 }
 
 .cand-header h3 {
     font-size: 1.2rem;
-    color: var(--text-main);
+    color: var(--text-primary);
     margin-bottom: 0.25rem;
+    font-weight: 700;
 }
 
 .cand-header p {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -87,7 +101,7 @@
 
 .info-field {
     font-size: 0.95rem;
-    color: var(--text-main);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -95,7 +109,7 @@
 }
 
 .info-field svg {
-    color: var(--accent-600);
+    color: var(--primary);
 }
 
 .skills-area label {
@@ -103,7 +117,7 @@
     font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     margin-bottom: 0.75rem;
 }
 
@@ -115,7 +129,7 @@
 
 .skill-tag {
     background: #f1f5f9;
-    color: #475569;
+    color: var(--text-secondary);
     padding: 0.25rem 0.6rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -127,11 +141,11 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--border-light);
 }
 
 .btn-approve {
-    background: #22c55e;
+    background: var(--success);
     color: white;
     border: none;
     padding: 0.75rem;
@@ -142,24 +156,33 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.btn-approve:hover {
+    background: #15803d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2);
 }
 
 .btn-reject {
     background: white;
-    color: #ef4444;
-    border: 1.5px solid #fee2e2;
+    color: var(--danger);
+    border: 1.5px solid var(--danger-bg);
     padding: 0.75rem;
     border-radius: var(--radius-md);
     font-weight: 700;
     cursor: pointer;
+    transition: var(--transition);
 }
 
 .btn-reject:hover {
-    background: #fef2f2;
+    background: var(--danger-bg);
+    border-color: var(--danger);
 }
 
 .message-toast {
-    background: var(--text-main);
+    background: var(--text-primary);
     color: white;
     padding: 1rem 2rem;
     border-radius: var(--radius-lg);

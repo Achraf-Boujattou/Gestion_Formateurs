@@ -1,3 +1,4 @@
+/* --- Admin Evaluations Modern Styles --- */
 .admin-eval-container {
     display: flex;
     flex-direction: column;
@@ -7,10 +8,11 @@
 .eval-stats-summary {
     display: flex;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .eval-summary-card {
-    background: var(--accent-gradient);
+    background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
     padding: 2rem 3rem;
     border-radius: var(--radius-xl);
     color: white;
@@ -18,6 +20,14 @@
     box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.3);
     width: fit-content;
     min-width: 200px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.eval-summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
 }
 
 .eval-summary-card strong {
@@ -42,10 +52,21 @@
 }
 
 .eval-admin-card {
+    background: white;
+    border-radius: var(--radius-xl);
     padding: 2rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-light);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    transition: var(--transition);
+}
+
+.eval-admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float);
+    border-color: var(--primary-light);
 }
 
 .eval-card-header {
@@ -55,8 +76,8 @@
 }
 
 .avg-badge {
-    background: #f0fdf4;
-    color: #16a34a;
+    background: var(--success-bg);
+    color: var(--success);
     width: 4rem;
     height: 4rem;
     border-radius: var(--radius-lg);
@@ -66,13 +87,13 @@
     font-weight: 800;
     font-size: 1.1rem;
     flex-shrink: 0;
-    border: 1px solid #dcfce7;
+    border: 1px solid transparent;
 }
 
 .header-main h3 {
     font-size: 1.25rem;
     font-weight: 800;
-    color: var(--text-main);
+    color: var(--text-primary);
     margin-bottom: 0.25rem;
     display: flex;
     align-items: center;
@@ -80,12 +101,12 @@
 }
 
 .header-main h3 svg {
-    color: var(--accent-600);
+    color: var(--primary);
 }
 
 .header-main p {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -110,7 +131,7 @@
     font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .stars-display {
@@ -120,7 +141,7 @@
 
 .star-icon {
     font-size: 0.85rem;
-    color: #e2e8f0;
+    color: var(--border-light);
 }
 
 .star-icon.filled {
@@ -134,13 +155,13 @@
     border-radius: var(--radius-md);
     font-style: italic;
     font-size: 0.9rem;
-    color: var(--text-main);
+    color: var(--text-primary);
     display: flex;
     gap: 1rem;
 }
 
 .admin-comment svg {
-    color: var(--accent-500);
+    color: var(--primary);
     margin-top: 0.25rem;
     flex-shrink: 0;
 }
@@ -151,12 +172,12 @@
 }
 
 .eval-card-footer {
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--border-light);
     padding-top: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-weight: 600;
 }

@@ -1,102 +1,179 @@
+/* --- Join Trainer Modern Styles --- */
+
 .join-trainer-page {
-    background: #fbfcfe;
+    background: var(--bg-main);
     min-height: 100vh;
-    padding: 6rem 2rem;
+    padding: 8rem 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .join-trainer-container {
-    max-width: 1200px;
+    max-width: 1300px;
     width: 100%;
+    position: relative;
+    z-index: 10;
 }
 
 .join-trainer-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 4rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
     align-items: center;
 }
 
+.join-info-panel .hero-badge {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
 .join-info-panel h1 {
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-weight: 800;
     line-height: 1.1;
-    margin: 1.5rem 0;
-    color: var(--text-main);
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
 }
 
 .join-info-panel h1 span {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .join-info-panel p {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 3rem;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 4rem;
 }
 
 .perks-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .perk-item {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.75rem;
     align-items: center;
 }
 
 .perk-icon {
-    width: 3.5rem;
-    height: 3.5rem;
-    background: #f5f3ff;
-    color: var(--accent-600);
+    width: 4rem;
+    height: 4rem;
+    background: white;
+    color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-lg);
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     flex-shrink: 0;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-light);
 }
 
 .perk-item strong {
     display: block;
-    color: var(--text-main);
-    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
 }
 
 .perk-item p {
     margin: 0;
-    font-size: 0.95rem;
-    color: var(--text-muted);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
+/* --- Form Panel Premium --- */
 .join-form-panel {
-    padding: 3.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 4.5rem;
+    border-radius: 2rem;
+    box-shadow: var(--shadow-float);
+    border: 1px solid white;
+}
+
+.join-form-panel h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.form-label-premium {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.form-input-premium {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    background: white;
+    /* was bg-card */
+    transition: var(--transition);
+}
+
+.form-input-premium:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    outline: none;
 }
 
 .input-hint {
     display: block;
     margin-top: 0.5rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    font-style: italic;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
-@media (max-width: 968px) {
+.status-alert.success {
+    background: var(--success-bg);
+    color: var(--success);
+    border-radius: var(--radius-lg);
+}
+
+@media (max-width: 1024px) {
     .join-trainer-grid {
         grid-template-columns: 1fr;
+        gap: 4rem;
     }
 
     .join-info-panel {
         text-align: center;
+    }
+
+    .perks-list {
+        align-items: center;
+        /* Center items if text is centered */
     }
 
     .perk-item {
@@ -104,6 +181,10 @@
     }
 
     .join-info-panel h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
+    }
+
+    .join-form-panel {
+        padding: 2.5rem;
     }
 }

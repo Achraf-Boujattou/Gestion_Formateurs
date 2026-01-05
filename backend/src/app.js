@@ -10,6 +10,9 @@ const inscriptionRoutes = require('./routes/inscriptionRoutes');
 const groupeRoutes = require('./routes/groupeRoutes');
 const evaluationRoutes = require('./routes/evaluationRoutes');
 const candidatureRoutes = require('./routes/candidatureRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+
+const { errorHandler } = require('./middleware/errorMiddleware');
 
 // Initialize Admin
 authController.createDefaultAdmin();
@@ -30,10 +33,14 @@ app.use('/inscriptions', inscriptionRoutes); // Exposes /inscriptions
 app.use('/groupes', groupeRoutes); // Exposes /groupes
 app.use('/evaluations', evaluationRoutes); // Exposes /evaluations
 app.use('/candidatures', candidatureRoutes); // Exposes /candidatures
+app.use('/admin', dashboardRoutes); // Exposes /admin/stats
 
 // Basic route to check if API is working
 app.get('/', (req, res) => {
     res.json("API Backend is running properly.");
 });
+
+// Error Handling Middleware (must be after routes)
+app.use(errorHandler);
 
 module.exports = app;

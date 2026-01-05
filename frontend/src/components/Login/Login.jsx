@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
 import './Login.css';
@@ -14,7 +14,7 @@ const Login = ({ setAuth }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8081/login', values)
+        api.post('/login', values)
             .then(res => {
                 if (res.data.Status === "Success") {
                     // Save auth info in sessionStorage
@@ -33,11 +33,11 @@ const Login = ({ setAuth }) => {
                     if (res.data.role === 'admin') navigate('/admin');
                     else if (res.data.role === 'formateur') navigate('/formateur');
                     else if (res.data.role === 'assistant') navigate('/assistant');
-                } else {
-                    setError(res.data.Error);
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setError(err.userMessage || "Erreur de connexion");
+            });
     }
 
     return (

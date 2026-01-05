@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FiEdit2, FiTrash2, FiPlus, FiBook, FiCheckCircle, FiAlertCircle, FiClock, FiDollarSign, FiTag, FiMapPin, FiCalendar } from 'react-icons/fi';
+import api from '../../../services/api';
+import { FiEdit2, FiTrash2, FiPlus, FiBook, FiCheckCircle, FiAlertCircle, FiClock, FiDollarSign, FiTag, FiMapPin, FiCalendar, FiTarget, FiList } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminFormations.css';
 
@@ -24,7 +24,7 @@ const AdminFormations = () => {
 
     // Fetch existing formations
     const fetchFormations = () => {
-        axios.get('http://localhost:8081/formations')
+        api.get('/formations')
             .then(res => setFormations(res.data))
             .catch(err => console.error("Erreur chargement formations", err));
     };
@@ -64,40 +64,25 @@ const AdminFormations = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette formation ?")) {
-            const token = sessionStorage.getItem('token');
-            axios.delete(`http://localhost:8081/formations/${id}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
+            api.delete(`/formations/${id}`)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         setMessage({ type: 'success', text: 'Formation supprimée.' });
                         fetchFormations();
                         setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-                    } else {
-                        setMessage({ type: 'error', text: res.data.Error });
                     }
                 })
                 .catch(err => {
-                    console.error(err);
-                    setMessage({ type: 'error', text: "Erreur suppression." });
+                    setMessage({ type: 'error', text: err.userMessage || "Erreur suppression." });
                 });
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const token = sessionStorage.getItem('token');
-
-        let apiCall;
-        if (isEditMode) {
-            apiCall = axios.put(`http://localhost:8081/formations/${currentId}`, formData, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-        } else {
-            apiCall = axios.post('http://localhost:8081/formations', formData, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-        }
+        const apiCall = isEditMode
+            ? api.put(`/formations/${currentId}`, formData)
+            : api.post('/formations', formData);
 
         apiCall
             .then(res => {
@@ -106,13 +91,10 @@ const AdminFormations = () => {
                     setShowModal(false);
                     fetchFormations();
                     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-                } else {
-                    setMessage({ type: 'error', text: res.data.Error });
                 }
             })
             .catch(err => {
-                console.error(err);
-                setMessage({ type: 'error', text: "Erreur lors de l'opération." });
+                setMessage({ type: 'error', text: err.userMessage || "Erreur lors de l'opération." });
             });
     };
 
@@ -170,10 +152,10 @@ const AdminFormations = () => {
                                     </td>
                                     <td>
                                         <div className="actions-cell">
-                                            <button className="btn-action btn-edit" onClick={() => handleEdit(formation)} title="Modifier">
+                                            <button className="btn-action-premium btn-action-edit" onClick={() => handleEdit(formation)} title="Modifier">
                                                 <FiEdit2 />
                                             </button>
-                                            <button className="btn-action btn-delete" onClick={() => handleDelete(formation.id)} title="Supprimer">
+                                            <button className="btn-action-premium btn-action-delete" onClick={() => handleDelete(formation.id)} title="Supprimer">
                                                 <FiTrash2 />
                                             </button>
                                         </div>
@@ -197,59 +179,130 @@ const AdminFormations = () => {
                                 <h3>{isEditMode ? 'Modifier la Formation' : 'Ajouter une Formation'}</h3>
                                 <button className="close-btn" onClick={() => setShowModal(false)}>&times;</button>
                             </div>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} className="premium-form">
                                 <div className="form-grid">
-                                    <div className="form-group span-2">
-                                        <label className="form-label">Titre de la formation</label>
-                                        <input type="text" name="titre" className="form-input" value={formData.titre} onChange={handleChange} required />
+                                    <div className="form-group full-width">
+                                        <label>Titre de la formation <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiBook className="field-icon" />
+                                            <input
+                                                type="text"
+                                                name="titre"
+                                                placeholder="Ex: Masterclass React & Node.js"
+                                                value={formData.titre}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label">Catégorie</label>
-                                        <select name="categorie" className="form-input" value={formData.categorie} onChange={handleChange}>
-                                            <option value="Informatique">Informatique</option>
-                                            <option value="Management">Management</option>
-                                            <option value="Soft Skills">Soft Skills</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Design">Design</option>
-                                        </select>
+                                        <label>Catégorie</label>
+                                        <div className="input-with-icon">
+                                            <FiTag className="field-icon" />
+                                            <select name="categorie" value={formData.categorie} onChange={handleChange}>
+                                                <option value="Informatique">Informatique</option>
+                                                <option value="Management">Management</option>
+                                                <option value="Soft Skills">Soft Skills</option>
+                                                <option value="Marketing">Marketing</option>
+                                                <option value="Design">Design</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label">Ville</label>
-                                        <input type="text" name="ville" className="form-input" value={formData.ville} onChange={handleChange} />
+                                        <label>Ville</label>
+                                        <div className="input-with-icon">
+                                            <FiMapPin className="field-icon" />
+                                            <input
+                                                type="text"
+                                                name="ville"
+                                                placeholder="Ex: Casablanca"
+                                                value={formData.ville}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label">Date prévue</label>
-                                        <input type="date" name="date_formation" className="form-input" value={formData.date_formation} onChange={handleChange} />
+                                        <label>Date de démarrage</label>
+                                        <div className="input-with-icon">
+                                            <FiCalendar className="field-icon" />
+                                            <input
+                                                type="date"
+                                                name="date_formation"
+                                                value={formData.date_formation}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label">Nombre d'heures</label>
-                                        <input type="number" name="nombre_heures" className="form-input" value={formData.nombre_heures} onChange={handleChange} required />
+                                        <label>Nombre d'heures</label>
+                                        <div className="input-with-icon">
+                                            <FiClock className="field-icon" />
+                                            <input
+                                                type="number"
+                                                name="nombre_heures"
+                                                placeholder="Ex: 35"
+                                                value={formData.nombre_heures}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label">Coût (€)</label>
-                                        <input type="number" name="cout" className="form-input" value={formData.cout} onChange={handleChange} required />
+                                        <label>Coût par participant (€)</label>
+                                        <div className="input-with-icon">
+                                            <FiDollarSign className="field-icon" />
+                                            <input
+                                                type="number"
+                                                name="cout"
+                                                placeholder="Ex: 1500"
+                                                value={formData.cout}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="form-group span-2">
-                                        <label className="form-label">Objectifs Pédagogiques</label>
-                                        <textarea name="objectifs" className="form-input textarea-field" value={formData.objectifs} onChange={handleChange} required />
+                                    <div className="form-group full-width">
+                                        <label>Objectifs Pédagogiques</label>
+                                        <div className="input-with-icon">
+                                            <FiTarget className="field-icon" />
+                                            <textarea
+                                                name="objectifs"
+                                                placeholder="Quels sont les compétences visées..."
+                                                value={formData.objectifs}
+                                                onChange={handleChange}
+                                                required
+                                                rows="3"
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="form-group span-2">
-                                        <label className="form-label">Programme Détaillé</label>
-                                        <textarea name="programme" className="form-input textarea-field" value={formData.programme} onChange={handleChange} required />
+                                    <div className="form-group full-width">
+                                        <label>Programme Détaillé</label>
+                                        <div className="input-with-icon">
+                                            <FiList className="field-icon" />
+                                            <textarea
+                                                name="programme"
+                                                placeholder="Module 1: Introduction..."
+                                                value={formData.programme}
+                                                onChange={handleChange}
+                                                required
+                                                rows="4"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div className="modal-actions">
-                                    <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
-                                    <button type="submit" className="btn-primary" style={{ marginTop: 0 }}>
-                                        {isEditMode ? 'Modifier' : 'Enregistrer'}
+                                    <button type="button" className="btn-ghost" onClick={() => setShowModal(false)}>Annuler</button>
+                                    <button type="submit" className="btn-primary">
+                                        <FiCheckCircle />
+                                        {isEditMode ? 'Enregistrer les modifications' : 'Créer la formation'}
                                     </button>
                                 </div>
                             </form>

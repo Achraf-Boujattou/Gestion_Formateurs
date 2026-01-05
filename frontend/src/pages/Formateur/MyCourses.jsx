@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FiBook, FiCalendar, FiUsers, FiTag } from 'react-icons/fi';
+import api from '../../services/api';
+import { FiBook, FiCalendar, FiUsers, FiTag, FiClock } from 'react-icons/fi';
 import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import './TrainerPages.css';
 
@@ -10,10 +10,7 @@ const MyCourses = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        axios.get('http://localhost:8081/groupes/my-groups', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        api.get('/groupes/my-groups')
             .then(res => {
                 setCourses(res.data);
                 setLoading(false);
@@ -28,7 +25,7 @@ const MyCourses = () => {
         <DashboardLayout role="formateur" name={name}>
             <div className="trainer-page">
                 <div className="page-header">
-                    <h2>Mes Cours & Formations</h2>
+                    <h2>Mes Formations</h2>
                     <p>Liste des sessions de formation qui vous sont assignées</p>
                 </div>
 
@@ -37,8 +34,11 @@ const MyCourses = () => {
                 ) : (
                     <div className="courses-grid-trainer">
                         {courses.map(course => (
-                            <div key={course.id} className="trainer-course-card card-premium">
-                                <div className="course-badge">{course.categorie}</div>
+                            <div key={course.id} className="trainer-course-card">
+                                <span className="type-badge-premium badge-entreprise" style={{ position: 'absolute', top: '1.5rem', right: '1.5rem' }}>
+                                    {course.categorie || 'Formation'}
+                                </span>
+                                <FiBook style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '1.5rem' }} />
                                 <h3>{course.formation_titre}</h3>
                                 <div className="course-group-name">Groupe: {course.nom_groupe}</div>
 
@@ -48,7 +48,7 @@ const MyCourses = () => {
                                 </div>
 
                                 <div className="course-footer">
-                                    <div className="status-indicator active">En cours</div>
+                                    <div className="status-active">Session Active</div>
                                 </div>
                             </div>
                         ))}

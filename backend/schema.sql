@@ -125,3 +125,43 @@ CREATE TABLE IF NOT EXISTS candidatures_formateurs (
     statut ENUM('en_attente', 'valide', 'refuse') DEFAULT 'en_attente',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+-- ========================================
+-- INDEX POUR OPTIMISATION DES PERFORMANCES
+-- ========================================
+
+-- Index sur les colonnes fréquemment utilisées dans les WHERE et JOIN
+CREATE INDEX idx_utilisateurs_role ON utilisateurs(role);
+CREATE INDEX idx_utilisateurs_email ON utilisateurs(email);
+
+CREATE INDEX idx_formations_categorie ON formations(categorie);
+CREATE INDEX idx_formations_ville ON formations(ville);
+CREATE INDEX idx_formations_date ON formations(date_formation);
+
+CREATE INDEX idx_formateur_utilisateur ON formateur(utilisateur_id);
+
+CREATE INDEX idx_planifications_formation ON planifications(formation_id);
+CREATE INDEX idx_planifications_formateur ON planifications(formateur_id);
+CREATE INDEX idx_planifications_entreprise ON planifications(entreprise_id);
+CREATE INDEX idx_planifications_status ON planifications(status);
+
+CREATE INDEX idx_planification_dates_planification ON planification_dates(planification_id);
+CREATE INDEX idx_planification_dates_date ON planification_dates(date);
+
+CREATE INDEX idx_individus_email ON individus(email);
+
+CREATE INDEX idx_inscriptions_individu ON inscriptions(individu_id);
+CREATE INDEX idx_inscriptions_formation ON inscriptions(formation_id);
+CREATE INDEX idx_inscriptions_status ON inscriptions(status);
+
+CREATE INDEX idx_groupes_formation ON groupes(formation_id);
+CREATE INDEX idx_groupes_formateur ON groupes(formateur_id);
+
+CREATE INDEX idx_groupe_individus_groupe ON groupe_individus(groupe_id);
+CREATE INDEX idx_groupe_individus_individu ON groupe_individus(individu_id);
+
+CREATE INDEX idx_evaluations_formation ON evaluations(formation_id);
+CREATE INDEX idx_evaluations_formateur ON evaluations(formateur_id);
+
+CREATE INDEX idx_candidatures_statut ON candidatures_formateurs(statut);
+CREATE INDEX idx_candidatures_email ON candidatures_formateurs(email);

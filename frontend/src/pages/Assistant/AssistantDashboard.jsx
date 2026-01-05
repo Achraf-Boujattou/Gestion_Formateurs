@@ -9,14 +9,14 @@ const AssistantDashboard = () => {
     return (
         <DashboardLayout role="assistant" name={name}>
             <div className="stats-grid">
-                <div className="stat-card">
+                <div className="stat-card animate-fade-in">
                     <div className="stat-icon-wrapper pending"><FiClock /></div>
                     <div className="stat-info">
                         <div className="stat-value">12</div>
                         <div className="stat-label">Demandes en attente</div>
                     </div>
                 </div>
-                <div className="stat-card">
+                <div className="stat-card animate-fade-in" style={{ animationDelay: '0.1s' }}>
                     <div className="stat-icon-wrapper reports"><FiFileText /></div>
                     <div className="stat-info">
                         <div className="stat-value">3</div>
@@ -24,7 +24,7 @@ const AssistantDashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="dashboard-content">
+            <div className="dashboard-content card-premium animate-slide-up">
                 <div className="content-header">
                     <FiList className="section-icon" />
                     <h3>Tâches Administratives</h3>

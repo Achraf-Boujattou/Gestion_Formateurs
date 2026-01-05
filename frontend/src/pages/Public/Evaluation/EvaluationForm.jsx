@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../services/api';
 import { FiStar, FiSend, FiCheckCircle, FiAlertCircle, FiMessageSquare, FiUser, FiInfo } from 'react-icons/fi';
 import './EvaluationForm.css';
 
@@ -21,7 +21,7 @@ const EvaluationForm = () => {
     const [commentaire, setCommentaire] = useState('');
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/evaluations/context/${formationId}`)
+        api.get(`/evaluations/context/${formationId}`)
             .then(res => {
                 setContext(res.data);
                 setLoading(false);
@@ -48,7 +48,7 @@ const EvaluationForm = () => {
 
         setSubmitting(true);
         try {
-            await axios.post('http://localhost:8081/evaluations/submit', {
+            await api.post('/evaluations/submit', {
                 formation_id: formationId,
                 formateur_id: context.formateur_id,
                 ...ratings,
@@ -57,7 +57,7 @@ const EvaluationForm = () => {
             setMessage({ type: 'success', text: "Merci pour votre feedback ! Il a été enregistré avec succès." });
             setTimeout(() => navigate('/'), 4000);
         } catch (err) {
-            setMessage({ type: 'error', text: "Erreur lors de la soumission. Veuillez réessayer." });
+            setMessage({ type: 'error', text: err.userMessage || "Erreur lors de la soumission. Veuillez réessayer." });
         } finally {
             setSubmitting(false);
         }

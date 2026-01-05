@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiUsers, FiPlus, FiTrash2, FiUserPlus, FiBook, FiUser, FiMoreVertical } from 'react-icons/fi';
+import { FiUsers, FiPlus, FiTrash2, FiUserPlus, FiBook, FiUser, FiMoreVertical, FiCheckCircle } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminGroupes.css';
 
@@ -157,28 +157,57 @@ const AdminGroupes = () => {
                                 <h3>Créer un nouveau groupe</h3>
                                 <button className="close-btn" onClick={() => setShowModal(false)}>&times;</button>
                             </div>
-                            <form onSubmit={handleCreateGroup}>
-                                <div className="form-group">
-                                    <label>Nom du groupe</label>
-                                    <input type="text" className="form-input" value={newGroup.nom_groupe} onChange={e => setNewGroup({ ...newGroup, nom_groupe: e.target.value })} required />
+                            <form onSubmit={handleCreateGroup} className="premium-form">
+                                <div className="form-grid">
+                                    <div className="form-group full-width">
+                                        <label>Nom du groupe <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiUsers className="field-icon" />
+                                            <input
+                                                type="text"
+                                                placeholder="Ex: Groupe React Avancé - Session 2026"
+                                                value={newGroup.nom_groupe}
+                                                onChange={e => setNewGroup({ ...newGroup, nom_groupe: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group full-width">
+                                        <label>Formation Associée <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiBook className="field-icon" />
+                                            <select
+                                                value={newGroup.formation_id}
+                                                onChange={e => setNewGroup({ ...newGroup, formation_id: e.target.value })}
+                                                required
+                                            >
+                                                <option value="">Sélectionner une formation...</option>
+                                                {dependencies.formations.map(f => <option key={f.id} value={f.id}>{f.titre}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group full-width">
+                                        <label>Formateur Responsable</label>
+                                        <div className="input-with-icon">
+                                            <FiUser className="field-icon" />
+                                            <select
+                                                value={newGroup.formateur_id}
+                                                onChange={e => setNewGroup({ ...newGroup, formateur_id: e.target.value })}
+                                            >
+                                                <option value="">-- Aucun (Temporairement) --</option>
+                                                {dependencies.formateurs.map(f => <option key={f.id} value={f.id}>{f.nom} {f.prenom}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label>Formation</label>
-                                    <select className="form-input" value={newGroup.formation_id} onChange={e => setNewGroup({ ...newGroup, formation_id: e.target.value })} required>
-                                        <option value="">Sélectionner une formation</option>
-                                        {dependencies.formations.map(f => <option key={f.id} value={f.id}>{f.titre}</option>)}
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label>Formateur</label>
-                                    <select className="form-input" value={newGroup.formateur_id} onChange={e => setNewGroup({ ...newGroup, formateur_id: e.target.value })}>
-                                        <option value="">Aucun (Temporairement)</option>
-                                        {dependencies.formateurs.map(f => <option key={f.id} value={f.id}>{f.nom} {f.prenom}</option>)}
-                                    </select>
-                                </div>
+
                                 <div className="modal-actions">
-                                    <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
-                                    <button type="submit" className="btn-primary">Créer le groupe</button>
+                                    <button type="button" className="btn-ghost" onClick={() => setShowModal(false)}>Annuler</button>
+                                    <button type="submit" className="btn-primary">
+                                        <FiCheckCircle /> Créer le groupe
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -193,17 +222,29 @@ const AdminGroupes = () => {
                                 <h3>Ajouter un individu au groupe</h3>
                                 <button className="close-btn" onClick={() => setShowAddMemberModal(false)}>&times;</button>
                             </div>
-                            <form onSubmit={handleAddMember}>
-                                <div className="form-group">
-                                    <label>Sélectionner l'individu</label>
-                                    <select className="form-input" value={selectedIndividuId} onChange={e => setSelectedIndividuId(e.target.value)} required>
-                                        <option value="">Sélectionner...</option>
-                                        {individus.map(i => <option key={i.id} value={i.id}>{i.prenom} {i.nom} ({i.email})</option>)}
-                                    </select>
+                            <form onSubmit={handleAddMember} className="premium-form">
+                                <div className="form-grid">
+                                    <div className="form-group full-width">
+                                        <label>Sélectionner l'individu <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiUserPlus className="field-icon" />
+                                            <select
+                                                value={selectedIndividuId}
+                                                onChange={e => setSelectedIndividuId(e.target.value)}
+                                                required
+                                            >
+                                                <option value="">Rechercher un membre...</option>
+                                                {individus.map(i => <option key={i.id} value={i.id}>{i.prenom} {i.nom} ({i.email})</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div className="modal-actions">
-                                    <button type="button" className="btn-secondary" onClick={() => setShowAddMemberModal(false)}>Annuler</button>
-                                    <button type="submit" className="btn-primary">Ajouter</button>
+                                    <button type="button" className="btn-ghost" onClick={() => setShowAddMemberModal(false)}>Annuler</button>
+                                    <button type="submit" className="btn-primary">
+                                        <FiPlus /> Ajouter au groupe
+                                    </button>
                                 </div>
                             </form>
                         </div>

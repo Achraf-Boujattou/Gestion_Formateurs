@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { sanitizeString, validateRequiredFields, isValidEmail, isValidPhone } = require('../utils/validation');
 
 // Get all companies
 exports.getAllEntreprises = (req, res) => {
@@ -11,11 +12,24 @@ exports.getAllEntreprises = (req, res) => {
 
 // Create a new company
 exports.createEntreprise = (req, res) => {
-    const { nom, adresse, telephone, site_web, email } = req.body;
+    let { nom, adresse, telephone, site_web, email } = req.body;
 
-    if (!nom) {
-        return res.status(400).json({ Error: "Le nom de l'entreprise est obligatoire." });
+    const validation = validateRequiredFields({ nom });
+    if (!validation.valid) {
+        return res.status(400).json({ Error: validation.message });
     }
+
+    if (email && !isValidEmail(email)) {
+        return res.status(400).json({ Error: "Format d'email invalide." });
+    }
+
+    if (telephone && !isValidPhone(telephone)) {
+        return res.status(400).json({ Error: "Format de téléphone invalide." });
+    }
+
+    nom = sanitizeString(nom);
+    adresse = sanitizeString(adresse);
+    site_web = sanitizeString(site_web);
 
     const sql = "INSERT INTO entreprises (nom, adresse, telephone, site_web, email) VALUES (?, ?, ?, ?, ?)";
     const values = [nom, adresse, telephone, site_web, email];
@@ -29,11 +43,24 @@ exports.createEntreprise = (req, res) => {
 // Update a company
 exports.updateEntreprise = (req, res) => {
     const { id } = req.params;
-    const { nom, adresse, telephone, site_web, email } = req.body;
+    let { nom, adresse, telephone, site_web, email } = req.body;
 
-    if (!nom) {
-        return res.status(400).json({ Error: "Le nom de l'entreprise est obligatoire." });
+    const validation = validateRequiredFields({ nom });
+    if (!validation.valid) {
+        return res.status(400).json({ Error: validation.message });
     }
+
+    if (email && !isValidEmail(email)) {
+        return res.status(400).json({ Error: "Format d'email invalide." });
+    }
+
+    if (telephone && !isValidPhone(telephone)) {
+        return res.status(400).json({ Error: "Format de téléphone invalide." });
+    }
+
+    nom = sanitizeString(nom);
+    adresse = sanitizeString(adresse);
+    site_web = sanitizeString(site_web);
 
     const sql = "UPDATE entreprises SET nom=?, adresse=?, telephone=?, site_web=?, email=? WHERE id=?";
     const values = [nom, adresse, telephone, site_web, email, id];

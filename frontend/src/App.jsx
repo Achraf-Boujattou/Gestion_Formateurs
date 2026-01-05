@@ -97,7 +97,6 @@ function App() {
                                 <Route path="groupes" element={<AdminGroupes />} />
                                 <Route path="evaluations" element={<AdminEvaluations />} />
                                 <Route path="candidatures" element={<AdminCandidatures />} />
-                                <Route path="parametres" element={<div>Page Paramètres (A faire)</div>} />
                             </Routes>
                         </PrivateRoute>
                     }

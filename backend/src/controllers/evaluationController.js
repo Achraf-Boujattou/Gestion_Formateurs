@@ -1,14 +1,24 @@
 const db = require('../config/db');
+const { isValidRating, sanitizeString, validateRequiredFields } = require('../utils/validation');
 
 exports.submitEvaluation = (req, res) => {
     const { formation_id, formateur_id, pedagogie, rythme, supports, maitrise, commentaire } = req.body;
 
-    if (!formation_id || !formateur_id || !pedagogie || !rythme || !supports || !maitrise) {
-        return res.status(400).json({ Error: "Tous les critères d'évaluation sont obligatoires." });
+    // 1. Validation champs requis
+    const validation = validateRequiredFields(req.body, ['formation_id', 'formateur_id', 'pedagogie', 'rythme', 'supports', 'maitrise']);
+    if (!validation.valid) {
+        return res.status(400).json({ Error: `Champs manquants : ${validation.missing.join(', ')}` });
     }
 
+    // 2. Validation des notes (1-5)
+    if (!isValidRating(pedagogie) || !isValidRating(rythme) || !isValidRating(supports) || !isValidRating(maitrise)) {
+        return res.status(400).json({ Error: "Les notes doivent être comprises entre 1 et 5." });
+    }
+
+    const safeComment = sanitizeString(commentaire || '');
+
     const sql = "INSERT INTO evaluations (formation_id, formateur_id, pedagogie, rythme, supports, maitrise, commentaire) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const values = [formation_id, formateur_id, pedagogie, rythme, supports, maitrise, commentaire || null];
+    const values = [formation_id, formateur_id, pedagogie, rythme, supports, maitrise, safeComment];
 
     db.query(sql, values, (err, result) => {
         if (err) {

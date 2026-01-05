@@ -1,17 +1,35 @@
 const db = require('../config/db');
 
+const { isValidEmail, isValidPhone, isValidDate, sanitizeString, validateRequiredFields } = require('../utils/validation');
+
 // Public registration
 exports.publicRegister = (req, res) => {
     const { nom, prenom, date_naissance, ville, email, telephone, formation_id } = req.body;
 
-    if (!nom || !prenom || !date_naissance || !ville || !email || !telephone || !formation_id) {
-        return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
+    // 1. Validation champs requis
+    const validation = validateRequiredFields(req.body, ['nom', 'prenom', 'date_naissance', 'ville', 'email', 'telephone', 'formation_id']);
+    if (!validation.valid) {
+        return res.status(400).json({ Error: `Champs manquants : ${validation.missing.join(', ')}` });
     }
 
-    // 1. Insert or get individu
+    // 2. Validations format
+    if (!isValidEmail(email)) return res.status(400).json({ Error: "Email invalide." });
+    if (!isValidPhone(telephone)) return res.status(400).json({ Error: "Téléphone invalide." });
+    if (!isValidDate(date_naissance)) return res.status(400).json({ Error: "Date de naissance invalide." });
+
+    // 3. Sanitization
+    const safeNom = sanitizeString(nom);
+    const safePrenom = sanitizeString(prenom);
+    const safeVille = sanitizeString(ville);
+    const safeTel = telephone.replace(/\s/g, '');
+
+    // 4. Insert or get individu
     const checkIndividu = "SELECT id FROM individus WHERE email = ?";
     db.query(checkIndividu, [email], (err, data) => {
-        if (err) return res.status(500).json({ Error: "Erreur vérification individu" });
+        if (err) {
+            console.error("Erreur check individu:", err);
+            return res.status(500).json({ Error: "Erreur serveur." });
+        }
 
         if (data.length > 0) {
             // Individu exists, create inscription
@@ -20,8 +38,11 @@ exports.publicRegister = (req, res) => {
         } else {
             // New individu
             const sqlIndividu = "INSERT INTO individus (nom, prenom, date_naissance, ville, email, telephone) VALUES (?, ?, ?, ?, ?, ?)";
-            db.query(sqlIndividu, [nom, prenom, date_naissance, ville, email, telephone], (errI, resultI) => {
-                if (errI) return res.status(500).json({ Error: "Erreur création individu" });
+            db.query(sqlIndividu, [safeNom, safePrenom, date_naissance, safeVille, email, safeTel], (errI, resultI) => {
+                if (errI) {
+                    console.error("Erreur création individu:", errI);
+                    return res.status(500).json({ Error: "Erreur lors de l'enregistrement de vos informations." });
+                }
                 createSpecificInscription(resultI.insertId, formation_id, res);
             });
         }

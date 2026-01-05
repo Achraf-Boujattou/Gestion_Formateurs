@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FiEdit2, FiTrash2, FiSearch, FiPlus, FiUserPlus, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
+import api from '../../../services/api';
+import { FiEdit2, FiTrash2, FiSearch, FiPlus, FiUserPlus, FiAlertCircle, FiCheckCircle, FiUser, FiMail, FiLock, FiShield, FiCheckSquare } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminUsers.css';
 
@@ -28,10 +28,7 @@ const AdminUsers = () => {
     const itemsPerPage = 5;
 
     const fetchUsers = () => {
-        const token = sessionStorage.getItem('token');
-        axios.get('http://localhost:8081/utilisateurs', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+        api.get('/utilisateurs')
             .then(res => {
                 setUsers(res.data);
                 setFilteredUsers(res.data);
@@ -90,40 +87,25 @@ const AdminUsers = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
-            const token = sessionStorage.getItem('token');
-            axios.delete(`http://localhost:8081/utilisateurs/${id}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
+            api.delete(`/utilisateurs/${id}`)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         setMessage({ type: 'success', text: 'Utilisateur supprimé.' });
                         fetchUsers();
                         setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-                    } else {
-                        setMessage({ type: 'error', text: res.data.Error });
                     }
                 })
                 .catch(err => {
-                    console.error(err);
-                    setMessage({ type: 'error', text: "Erreur suppression." });
+                    setMessage({ type: 'error', text: err.userMessage || "Erreur suppression." });
                 });
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const token = sessionStorage.getItem('token');
-
-        let apiCall;
-        if (isEditMode) {
-            apiCall = axios.put(`http://localhost:8081/utilisateurs/${currentId}`, formData, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-        } else {
-            apiCall = axios.post('http://localhost:8081/utilisateurs', formData, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-        }
+        const apiCall = isEditMode
+            ? api.put(`/utilisateurs/${currentId}`, formData)
+            : api.post('/utilisateurs', formData);
 
         apiCall
             .then(res => {
@@ -132,13 +114,10 @@ const AdminUsers = () => {
                     setShowModal(false);
                     fetchUsers();
                     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-                } else {
-                    setMessage({ type: 'error', text: res.data.Error });
                 }
             })
             .catch(err => {
-                console.error(err);
-                setMessage({ type: 'error', text: "Erreur lors de l'opération." });
+                setMessage({ type: 'error', text: err.userMessage || "Erreur lors de l'opération." });
             });
     };
 
@@ -155,7 +134,7 @@ const AdminUsers = () => {
                             <FiSearch className="search-icon" />
                             <input
                                 type="text"
-                                className="search-bar"
+                                className="search-bar-premium"
                                 placeholder="Rechercher..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -196,10 +175,10 @@ const AdminUsers = () => {
                                     </td>
                                     <td>
                                         <div className="actions-cell">
-                                            <button className="btn-action btn-edit" onClick={() => handleEdit(user)} title="Modifier l'utilisateur">
+                                            <button className="btn-action-premium btn-action-edit" onClick={() => handleEdit(user)} title="Modifier l'utilisateur">
                                                 <FiEdit2 />
                                             </button>
-                                            <button className="btn-action btn-delete" onClick={() => handleDelete(user.id)} title="Supprimer l'utilisateur">
+                                            <button className="btn-action-premium btn-action-delete" onClick={() => handleDelete(user.id)} title="Supprimer l'utilisateur">
                                                 <FiTrash2 />
                                             </button>
                                         </div>
@@ -238,47 +217,118 @@ const AdminUsers = () => {
                                 <h3>{isEditMode ? 'Modifier Utilisateur' : 'Ajouter Utilisateur'}</h3>
                                 <button className="close-btn" onClick={() => setShowModal(false)}>&times;</button>
                             </div>
-                            <form onSubmit={handleSubmit}>
-                                <div style={{ display: 'flex', gap: '1rem' }}>
-                                    <div className="form-group" style={{ flex: 1 }}>
-                                        <label className="form-label">Prénom</label>
-                                        <input type="text" name="prenom" className="form-input" value={formData.prenom} onChange={handleChange} required />
-                                    </div>
-                                    <div className="form-group" style={{ flex: 1 }}>
-                                        <label className="form-label">Nom</label>
-                                        <input type="text" name="nom" className="form-input" value={formData.nom} onChange={handleChange} required />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="form-label">Email</label>
-                                    <input type="email" name="email" className="form-input" value={formData.email} onChange={handleChange} required />
-                                </div>
-                                <div className="form-group">
-                                    <label className="form-label">Rôle</label>
-                                    <select name="role" className="form-input" value={formData.role} onChange={handleChange} required>
-                                        <option value="formateur">Formateur</option>
-                                        <option value="assistant">Assistant</option>
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label className="form-label">Mot de passe {isEditMode && '(Laisser vide pour ne pas changer)'}</label>
-                                    <input type="password" name="password" className="form-input" value={formData.password} onChange={handleChange} required={!isEditMode} />
-                                </div>
-                                {formData.role === 'formateur' && (
-                                    <>
-                                        <div className="form-group">
-                                            <label className="form-label">Compétences</label>
-                                            <textarea name="competences" className="form-input" value={formData.competences} onChange={handleChange} rows="3" placeholder="Ex: React, Java, SQL..."></textarea>
+                            <form onSubmit={handleSubmit} className="premium-form">
+                                <div className="form-grid">
+                                    <div className="form-group">
+                                        <label>Prénom <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiUser className="field-icon" />
+                                            <input
+                                                type="text"
+                                                name="prenom"
+                                                value={formData.prenom}
+                                                onChange={handleChange}
+                                                placeholder="Ex: Jean"
+                                                required
+                                            />
                                         </div>
-                                        <div className="form-group">
-                                            <label className="form-label">Remarques</label>
-                                            <textarea name="remarques" className="form-input" value={formData.remarques} onChange={handleChange} rows="3"></textarea>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Nom <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiUser className="field-icon" />
+                                            <input
+                                                type="text"
+                                                name="nom"
+                                                value={formData.nom}
+                                                onChange={handleChange}
+                                                placeholder="Ex: Dupont"
+                                                required
+                                            />
                                         </div>
-                                    </>
-                                )}
+                                    </div>
+
+                                    <div className="form-group full-width">
+                                        <label>Email Professionnel <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiMail className="field-icon" />
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                placeholder="jean.dupont@entreprise.com"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Rôle <span className="req">*</span></label>
+                                        <div className="input-with-icon">
+                                            <FiShield className="field-icon" />
+                                            <select name="role" value={formData.role} onChange={handleChange} required>
+                                                <option value="formateur">Formateur</option>
+                                                <option value="assistant">Assistant</option>
+                                                <option value="admin">Administrateur</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Mot de passe {isEditMode && '(Optionnel)'}</label>
+                                        <div className="input-with-icon">
+                                            <FiLock className="field-icon" />
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                value={formData.password}
+                                                onChange={handleChange}
+                                                placeholder={isEditMode ? "••••••••" : "Mot de passe sécurisé"}
+                                                required={!isEditMode}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {formData.role === 'formateur' && (
+                                        <>
+                                            <div className="form-group full-width">
+                                                <label>Compétences Clés</label>
+                                                <div className="input-with-icon">
+                                                    <FiCheckSquare className="field-icon" />
+                                                    <textarea
+                                                        name="competences"
+                                                        value={formData.competences}
+                                                        onChange={handleChange}
+                                                        rows="3"
+                                                        placeholder="Ex: React, Java, SQL, Gestion de projet..."
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="form-group full-width">
+                                                <label>Remarques / Bio</label>
+                                                <div className="input-with-icon">
+                                                    <FiEdit2 className="field-icon" />
+                                                    <textarea
+                                                        name="remarques"
+                                                        value={formData.remarques}
+                                                        onChange={handleChange}
+                                                        rows="2"
+                                                        placeholder="Notes additionnelles sur le formateur..."
+                                                    />
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+
                                 <div className="modal-actions">
-                                    <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
-                                    <button type="submit" className="btn-primary" style={{ marginTop: 0 }}>Enregistrer</button>
+                                    <button type="button" className="btn-ghost" onClick={() => setShowModal(false)}>Annuler</button>
+                                    <button type="submit" className="btn-primary">
+                                        <FiCheckCircle />
+                                        {isEditMode ? 'Enregistrer les modifications' : 'Créer l\'utilisateur'}
+                                    </button>
                                 </div>
                             </form>
                         </div>

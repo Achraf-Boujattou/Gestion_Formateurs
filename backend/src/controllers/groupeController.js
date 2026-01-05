@@ -1,10 +1,19 @@
 const db = require('../config/db');
+const { sanitizeString, validateRequiredFields } = require('../utils/validation');
 
 exports.createGroup = (req, res) => {
-    const { nom_groupe, formation_id, formateur_id } = req.body;
+    let { nom_groupe, formation_id, formateur_id } = req.body;
+
+    const validation = validateRequiredFields({ nom_groupe, formation_id });
+    if (!validation.valid) {
+        return res.status(400).json({ Error: validation.message });
+    }
+
+    nom_groupe = sanitizeString(nom_groupe);
+
     const sql = "INSERT INTO groupes (nom_groupe, formation_id, formateur_id) VALUES (?, ?, ?)";
     db.query(sql, [nom_groupe, formation_id, formateur_id || null], (err, result) => {
-        if (err) return res.status(500).json({ Error: "Erreur création groupe" });
+        if (err) return res.status(500).json({ Error: "Erreur lors de la création du groupe." });
         return res.json({ Status: "Success", id: result.insertId });
     });
 };
@@ -19,18 +28,24 @@ exports.getAllGroups = (req, res) => {
         LEFT JOIN utilisateurs u ON ft.utilisateur_id = u.id
     `;
     db.query(sql, (err, data) => {
-        if (err) return res.status(500).json(err);
+        if (err) return res.status(500).json({ Error: "Erreur serveur lors de la récupération des groupes." });
         return res.json(data);
     });
 };
 
 exports.addIndividualToGroup = (req, res) => {
     const { groupe_id, individu_id } = req.body;
+
+    const validation = validateRequiredFields({ groupe_id, individu_id });
+    if (!validation.valid) {
+        return res.status(400).json({ Error: validation.message });
+    }
+
     const sql = "INSERT INTO groupe_individus (groupe_id, individu_id) VALUES (?, ?)";
     db.query(sql, [groupe_id, individu_id], (err, result) => {
         if (err) {
-            if (err.code === 'ER_DUP_ENTRY') return res.status(400).json({ Error: "Cet individu est déjà dans le groupe." });
-            return res.status(500).json({ Error: "Erreur ajout membre" });
+            if (err.code === 'ER_DUP_ENTRY') return res.status(400).json({ Error: "Cet individu est déjà membre de ce groupe." });
+            return res.status(500).json({ Error: "Erreur lors de l'ajout du membre au groupe." });
         }
         return res.json({ Status: "Success" });
     });
@@ -45,7 +60,7 @@ exports.getGroupMembers = (req, res) => {
         WHERE gi.groupe_id = ?
     `;
     db.query(sql, [id], (err, data) => {
-        if (err) return res.status(500).json(err);
+        if (err) return res.status(500).json({ Error: "Erreur lors de la récupération des membres." });
         return res.json(data);
     });
 };
@@ -53,7 +68,7 @@ exports.getGroupMembers = (req, res) => {
 exports.deleteGroup = (req, res) => {
     const { id } = req.params;
     db.query("DELETE FROM groupes WHERE id = ?", [id], (err) => {
-        if (err) return res.status(500).json({ Error: "Erreur suppression" });
+        if (err) return res.status(500).json({ Error: "Erreur lors de la suppression du groupe." });
         return res.json({ Status: "Success" });
     });
 };
@@ -71,7 +86,7 @@ exports.getTrainerGroups = (req, res) => {
         WHERE ft.utilisateur_id = ?
     `;
     db.query(sql, [utilisateur_id], (err, data) => {
-        if (err) return res.status(500).json(err);
+        if (err) return res.status(500).json({ Error: "Erreur serveur." });
         return res.json(data);
     });
 };
@@ -89,7 +104,7 @@ exports.getTrainerStudents = (req, res) => {
         WHERE ft.utilisateur_id = ?
     `;
     db.query(sql, [utilisateur_id], (err, data) => {
-        if (err) return res.status(500).json(err);
+        if (err) return res.status(500).json({ Error: "Erreur serveur." });
         return res.json(data);
     });
 };

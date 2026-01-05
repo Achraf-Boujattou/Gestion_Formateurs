@@ -1,15 +1,35 @@
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
+const { isValidEmail, isValidPhone, sanitizeString, validateRequiredFields } = require('../utils/validation');
+
 exports.submitCandidature = (req, res) => {
     const { nom, prenom, email, telephone, competences } = req.body;
 
-    if (!nom || !prenom || !email || !telephone || !competences) {
-        return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
+    // 1. Validation des champs requis
+    const validation = validateRequiredFields(req.body, ['nom', 'prenom', 'email', 'telephone', 'competences']);
+    if (!validation.valid) {
+        return res.status(400).json({ Error: `Champs manquants : ${validation.missing.join(', ')}` });
     }
 
+    // 2. Validation du format email
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ Error: "Format d'email invalide." });
+    }
+
+    // 3. Validation du téléphone
+    if (!isValidPhone(telephone)) {
+        return res.status(400).json({ Error: "Format de téléphone invalide (Ex: 0612345678)." });
+    }
+
+    // 4. Sanitization des données
+    const safeNom = sanitizeString(nom);
+    const safePrenom = sanitizeString(prenom);
+    const safeCompetences = sanitizeString(competences);
+    const safeTel = telephone.replace(/\s/g, ''); // Standardisation
+
     const sql = "INSERT INTO candidatures_formateurs (nom, prenom, email, telephone, competences) VALUES (?, ?, ?, ?, ?)";
-    db.query(sql, [nom, prenom, email, telephone, competences], (err, result) => {
+    db.query(sql, [safeNom, safePrenom, email, safeTel, safeCompetences], (err, result) => {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY') {
                 return res.status(400).json({ Error: "Cet email a déjà soumis une candidature." });

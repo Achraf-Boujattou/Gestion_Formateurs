@@ -1,106 +1,50 @@
+/* --- Trainer Pages Premium Styles --- */
 .trainer-page {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 3rem;
 }
 
 .page-header h2 {
-    font-size: 2rem;
+    font-size: 2.25rem;
     font-weight: 800;
     color: var(--text-main);
+    letter-spacing: -0.025em;
 }
 
 .page-header p {
     color: var(--text-muted);
-    font-weight: 500;
+    font-weight: 600;
+    margin-top: 0.25rem;
 }
 
+/* --- Course Grid Premium --- */
 .courses-grid-trainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2.5rem;
 }
 
 .trainer-course-card {
-    padding: 2rem;
-    position: relative;
+    background: white;
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-premium);
+    overflow: hidden;
+    transition: var(--transition);
 }
 
-.course-badge {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: #eef2ff;
-    color: var(--accent-700);
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
+.trainer-course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.1);
 }
 
-.trainer-course-card h3 {
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: var(--text-main);
-    margin: 1rem 0 0.5rem;
-}
-
-.course-group-name {
-    font-weight: 600;
-    color: var(--accent-600);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-}
-
-.course-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.25rem 0;
-    border-top: 1px solid #f1f5f9;
-}
-
-.course-meta span {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.course-meta svg {
-    color: var(--accent-500);
-}
-
-.course-footer {
-    margin-top: 1rem;
-}
-
-.status-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.status-indicator.active {
-    color: #10b981;
-}
-
-.status-indicator.active::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: #10b981;
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
-}
-
-/* Table styles for Students */
-.table-wrapper {
+/* --- Student Table Premium --- */
+.trainer-table-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-premium);
     overflow: hidden;
 }
 
@@ -110,81 +54,64 @@
 }
 
 .trainer-table th {
-    text-align: left;
-    padding: 1.25rem 2rem;
     background: #f8fafc;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    padding: 1.5rem 2rem;
+    text-align: left;
+    font-weight: 700;
     color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.075em;
+    border-bottom: 2px solid var(--border-light);
 }
 
 .trainer-table td {
-    padding: 1.25rem 2rem;
-    border-top: 1px solid #f1f5f9;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-main);
+    vertical-align: middle;
 }
 
-.contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+.trainer-table tr:hover td {
+    background-color: #f8fafc;
 }
 
-.contact-info span {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+/* --- Badges --- */
+.type-badge-premium {
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.badge-entreprise {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.badge-individuel {
+    background: #fdf2f8;
+    color: #db2777;
+}
+
+.status-active {
+    color: var(--success);
+    font-weight: 800;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.course-ref {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.course-ref svg {
-    margin-top: 0.25rem;
-    color: var(--accent-600);
-}
-
-.course-ref strong {
-    font-size: 0.95rem;
-    color: var(--text-main);
-}
-
-.course-ref p {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.type-badge {
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.type-badge.Par-Entreprise {
-    background: #ecfeff;
-    color: #0891b2;
-}
-
-.type-badge.Individuel {
-    background: #fdf2f8;
-    color: #db2777;
-}
-
-.no-data-view {
-    text-align: center;
-    padding: 5rem 2rem;
-    color: var(--text-muted);
-}
-
-.no-data-view svg {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    opacity: 0.3;
+.status-active::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
 }

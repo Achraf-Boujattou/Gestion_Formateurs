@@ -1,3 +1,5 @@
+/* --- Entreprises Management Modern Styles --- */
+
 .entreprises-container {
     padding: 0;
     display: flex;
@@ -16,28 +18,34 @@
 .title-section h2 {
     font-size: 2rem;
     font-weight: 800;
-    color: var(--text-main);
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
 }
 
 .title-section p {
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-weight: 500;
-    margin-top: 0.25rem;
 }
 
 .add-btn {
-    background: var(--accent-gradient);
+    background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
     color: white;
     padding: 0.875rem 1.75rem;
     border: none;
     border-radius: var(--radius-lg);
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
 }
 
 /* Status Alert */
@@ -48,18 +56,19 @@
     padding: 1rem 1.5rem;
     border-radius: var(--radius-md);
     font-weight: 600;
+    box-shadow: var(--shadow-sm);
 }
 
 .status-alert.success {
-    background: #f0fdf4;
-    color: #16a34a;
-    border: 1px solid #dcfce7;
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success-bg);
 }
 
 .status-alert.error {
-    background: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fee2e2;
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger-bg);
 }
 
 .entreprises-grid {
@@ -72,8 +81,8 @@
     background: white;
     border-radius: var(--radius-xl);
     padding: 2rem;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid #f1f5f9;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-light);
     transition: var(--transition);
     display: flex;
     flex-direction: column;
@@ -88,14 +97,15 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: var(--accent-gradient);
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
     opacity: 0;
     transition: var(--transition);
 }
 
 .entreprise-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-premium);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float);
+    border-color: var(--primary-light);
 }
 
 .entreprise-card:hover::before {
@@ -108,13 +118,13 @@
     align-items: flex-start;
     margin-bottom: 1.5rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .card-header h3 {
-    color: var(--text-main);
+    color: var(--text-primary);
     font-size: 1.35rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.02em;
 }
 
@@ -138,37 +148,49 @@
 
 .edit-icon {
     background: #eef2ff;
-    color: #4f46e5;
+    color: var(--primary);
+}
+
+.edit-icon:hover {
+    background: var(--primary);
+    color: white;
 }
 
 .delete-icon {
     background: #fef2f2;
-    color: #dc2626;
+    color: var(--danger);
+}
+
+.delete-icon:hover {
+    background: var(--danger);
+    color: white;
 }
 
 .card-body p {
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 0.9375rem;
     margin-bottom: 1rem;
     font-weight: 500;
 }
 
 .card-body svg {
-    color: var(--accent-600);
+    color: var(--primary);
     font-size: 1.1rem;
     min-width: 1.1rem;
 }
 
 .card-body a {
-    color: var(--accent-700);
+    color: var(--primary);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 600;
+    transition: var(--transition);
 }
 
 .card-body a:hover {
+    color: var(--secondary);
     text-decoration: underline;
 }
 

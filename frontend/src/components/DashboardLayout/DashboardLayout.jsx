@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { FiHome, FiUsers, FiBriefcase, FiBookOpen, FiSettings, FiLogOut, FiUsers as FiStudents, FiLayout, FiCalendar, FiInbox, FiGrid, FiStar, FiUserPlus } from 'react-icons/fi';
 import './DashboardLayout.css';
 
@@ -15,9 +15,9 @@ const DashboardLayout = ({ children, role, name }) => {
     return (
         <div className="dashboard-layout">
             <aside className="sidebar">
-                <div className="sidebar-title">
+                <Link to={`/${role}`} className="sidebar-title" style={{ textDecoration: 'none' }}>
                     <FiLayout className="logo-icon" /> Formation<span>App</span>
-                </div>
+                </Link>
                 <nav>
                     <NavLink to={`/${role}`} className="nav-link" end>
                         <FiHome /> <span>Vue d'ensemble</span>
@@ -48,9 +48,6 @@ const DashboardLayout = ({ children, role, name }) => {
                             <NavLink to="/admin/candidatures" className="nav-link">
                                 <FiUserPlus /> <span>Candidatures</span>
                             </NavLink>
-                            <NavLink to="/admin/parametres" className="nav-link">
-                                <FiSettings /> <span>Paramètres</span>
-                            </NavLink>
                         </>
                     )}
                     {role === 'assistant' && (
@@ -75,7 +72,7 @@ const DashboardLayout = ({ children, role, name }) => {
                     {role === 'formateur' && (
                         <>
                             <NavLink to="/formateur/cours" className="nav-link">
-                                <FiBookOpen /> <span>Mes Cours</span>
+                                <FiBookOpen /> <span>Mes Formations</span>
                             </NavLink>
                             <NavLink to="/formateur/etudiants" className="nav-link">
                                 <FiStudents /> <span>Étudiants</span>
