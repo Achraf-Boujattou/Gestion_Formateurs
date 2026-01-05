@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
 import './Login.css';
 
@@ -78,10 +78,18 @@ const Login = ({ setAuth }) => {
                             />
                         </div>
                     </div>
+                    <div className="auth-options">
+                        <Link to="/forgot-password" disabled className="forgot-link">Mot de passe oublié ?</Link>
+                    </div>
+
                     <button type="submit" className="btn-primary">
                         Se Connecter <FiArrowRight />
                     </button>
                 </form>
+
+                <div className="auth-switch">
+                    Pas encore de compte ? <Link to="/register">S'inscrire</Link>
+                </div>
             </div>
         </div>
     );

@@ -8,6 +8,8 @@ const entrepriseRoutes = require('./routes/entrepriseRoutes');
 const planningRoutes = require('./routes/planningRoutes');
 const inscriptionRoutes = require('./routes/inscriptionRoutes');
 const groupeRoutes = require('./routes/groupeRoutes');
+const evaluationRoutes = require('./routes/evaluationRoutes');
+const candidatureRoutes = require('./routes/candidatureRoutes');
 
 // Initialize Admin
 authController.createDefaultAdmin();
@@ -26,6 +28,8 @@ app.use('/entreprises', entrepriseRoutes); // Exposes /entreprises
 app.use('/plannings', planningRoutes); // Exposes /plannings
 app.use('/inscriptions', inscriptionRoutes); // Exposes /inscriptions
 app.use('/groupes', groupeRoutes); // Exposes /groupes
+app.use('/evaluations', evaluationRoutes); // Exposes /evaluations
+app.use('/candidatures', candidatureRoutes); // Exposes /candidatures
 
 // Basic route to check if API is working
 app.get('/', (req, res) => {

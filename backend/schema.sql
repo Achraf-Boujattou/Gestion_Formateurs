@@ -100,3 +100,28 @@ CREATE TABLE IF NOT EXISTS groupe_individus (
     FOREIGN KEY (groupe_id) REFERENCES groupes(id) ON DELETE CASCADE,
     FOREIGN KEY (individu_id) REFERENCES individus(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS evaluations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    formation_id INT NOT NULL,
+    formateur_id INT NOT NULL,
+    pedagogie TINYINT NOT NULL CHECK (pedagogie BETWEEN 1 AND 5),
+    rythme TINYINT NOT NULL CHECK (rythme BETWEEN 1 AND 5),
+    supports TINYINT NOT NULL CHECK (supports BETWEEN 1 AND 5),
+    maitrise TINYINT NOT NULL CHECK (maitrise BETWEEN 1 AND 5),
+    commentaire TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (formation_id) REFERENCES formations(id) ON DELETE CASCADE,
+    FOREIGN KEY (formateur_id) REFERENCES formateur(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS candidatures_formateurs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    telephone VARCHAR(20) NOT NULL,
+    competences TEXT NOT NULL,
+    statut ENUM('en_attente', 'valide', 'refuse') DEFAULT 'en_attente',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

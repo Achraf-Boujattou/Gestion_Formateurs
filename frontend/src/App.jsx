@@ -3,12 +3,20 @@ import { useState, useEffect } from 'react';
 import Home from './pages/Public/Home/Home';
 import RegisterFormation from './pages/Public/Register/RegisterFormation';
 import Login from './components/Login/Login';
+import Register from './components/Login/Register';
+import ForgotPassword from './components/Login/ForgotPassword';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminFormations from './pages/Admin/Formations/AdminFormations';
 import AdminUsers from './pages/Admin/Users/AdminUsers';
 import AdminInscriptions from './pages/Admin/Inscriptions/AdminInscriptions';
 import AdminGroupes from './pages/Admin/Groupes/AdminGroupes';
+import AdminEvaluations from './pages/Admin/Evaluations/AdminEvaluations';
+import AdminCandidatures from './pages/Admin/Candidatures/AdminCandidatures';
+import EvaluationForm from './pages/Public/Evaluation/EvaluationForm';
+import JoinAsTrainer from './pages/Public/Join/JoinAsTrainer';
 import FormateurDashboard from './pages/Formateur/FormateurDashboard';
+import MyCourses from './pages/Formateur/MyCourses';
+import MyStudents from './pages/Formateur/MyStudents';
 import AssistantDashboard from './pages/Assistant/AssistantDashboard';
 import Entreprises from './pages/Common/Entreprises/Entreprises';
 import Planning from './pages/Common/Planning/Planning';
@@ -61,6 +69,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/register-formation/:id" element={<RegisterFormation />} />
+                <Route path="/evaluation/:formationId" element={<EvaluationForm />} />
+                <Route path="/join-as-trainer" element={<JoinAsTrainer />} />
 
                 <Route
                     path="/login"
@@ -70,6 +80,8 @@ function App() {
                             <Navigate to={`/${auth.role}`} replace />
                     }
                 />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
 
                 <Route
                     path="/admin/*"
@@ -83,6 +95,8 @@ function App() {
                                 <Route path="planning" element={<Planning />} />
                                 <Route path="inscriptions" element={<AdminInscriptions />} />
                                 <Route path="groupes" element={<AdminGroupes />} />
+                                <Route path="evaluations" element={<AdminEvaluations />} />
+                                <Route path="candidatures" element={<AdminCandidatures />} />
                                 <Route path="parametres" element={<div>Page Paramètres (A faire)</div>} />
                             </Routes>
                         </PrivateRoute>
@@ -93,7 +107,11 @@ function App() {
                     path="/formateur/*"
                     element={
                         <PrivateRoute allowedRoles={['formateur']}>
-                            <FormateurDashboard />
+                            <Routes>
+                                <Route index element={<FormateurDashboard />} />
+                                <Route path="cours" element={<MyCourses />} />
+                                <Route path="etudiants" element={<MyStudents />} />
+                            </Routes>
                         </PrivateRoute>
                     }
                 />
@@ -108,6 +126,7 @@ function App() {
                                 <Route path="planning" element={<Planning />} />
                                 <Route path="inscriptions" element={<AdminInscriptions />} />
                                 <Route path="groupes" element={<AdminGroupes />} />
+                                <Route path="evaluations" element={<AdminEvaluations />} />
                             </Routes>
                         </PrivateRoute>
                     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FiHome, FiUsers, FiBriefcase, FiBookOpen, FiSettings, FiLogOut, FiUsers as FiStudents, FiLayout, FiCalendar, FiInbox, FiGrid } from 'react-icons/fi';
+import { FiHome, FiUsers, FiBriefcase, FiBookOpen, FiSettings, FiLogOut, FiUsers as FiStudents, FiLayout, FiCalendar, FiInbox, FiGrid, FiStar, FiUserPlus } from 'react-icons/fi';
 import './DashboardLayout.css';
 
 const DashboardLayout = ({ children, role, name }) => {
@@ -42,6 +42,12 @@ const DashboardLayout = ({ children, role, name }) => {
                             <NavLink to="/admin/groupes" className="nav-link">
                                 <FiGrid /> <span>Groupes</span>
                             </NavLink>
+                            <NavLink to="/admin/evaluations" className="nav-link">
+                                <FiStar /> <span>Évaluations</span>
+                            </NavLink>
+                            <NavLink to="/admin/candidatures" className="nav-link">
+                                <FiUserPlus /> <span>Candidatures</span>
+                            </NavLink>
                             <NavLink to="/admin/parametres" className="nav-link">
                                 <FiSettings /> <span>Paramètres</span>
                             </NavLink>
@@ -60,6 +66,9 @@ const DashboardLayout = ({ children, role, name }) => {
                             </NavLink>
                             <NavLink to="/assistant/groupes" className="nav-link">
                                 <FiGrid /> <span>Groupes</span>
+                            </NavLink>
+                            <NavLink to="/assistant/evaluations" className="nav-link">
+                                <FiStar /> <span>Évaluations</span>
                             </NavLink>
                         </>
                     )}

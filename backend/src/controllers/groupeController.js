@@ -57,3 +57,39 @@ exports.deleteGroup = (req, res) => {
         return res.json({ Status: "Success" });
     });
 };
+
+exports.getTrainerGroups = (req, res) => {
+    // We assume req.user is set by verifyToken middleware
+    const utilisateur_id = req.user.id;
+
+    const sql = `
+        SELECT g.*, f.titre as formation_titre, f.categorie, f.date_formation,
+        (SELECT COUNT(*) FROM groupe_individus WHERE groupe_id = g.id) as membre_count
+        FROM groupes g
+        JOIN formations f ON g.formation_id = f.id
+        JOIN formateur ft ON g.formateur_id = ft.id
+        WHERE ft.utilisateur_id = ?
+    `;
+    db.query(sql, [utilisateur_id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+};
+
+exports.getTrainerStudents = (req, res) => {
+    const utilisateur_id = req.user.id;
+
+    const sql = `
+        SELECT DISTINCT ind.*, f.titre as formation_titre, g.nom_groupe
+        FROM individus ind
+        JOIN groupe_individus gi ON ind.id = gi.individu_id
+        JOIN groupes g ON gi.groupe_id = g.id
+        JOIN formations f ON g.formation_id = f.id
+        JOIN formateur ft ON g.formateur_id = ft.id
+        WHERE ft.utilisateur_id = ?
+    `;
+    db.query(sql, [utilisateur_id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json(data);
+    });
+};

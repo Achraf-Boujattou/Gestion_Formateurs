@@ -1,0 +1,109 @@
+.join-trainer-page {
+    background: #fbfcfe;
+    min-height: 100vh;
+    padding: 6rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.join-trainer-container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.join-trainer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.join-info-panel h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 1.5rem 0;
+    color: var(--text-main);
+}
+
+.join-info-panel h1 span {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.join-info-panel p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.perks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.perk-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.perk-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: #f5f3ff;
+    color: var(--accent-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.perk-item strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 1.1rem;
+}
+
+.perk-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.join-form-panel {
+    padding: 3.5rem;
+}
+
+.input-hint {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+@media (max-width: 968px) {
+    .join-trainer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .join-info-panel {
+        text-align: center;
+    }
+
+    .perk-item {
+        text-align: left;
+    }
+
+    .join-info-panel h1 {
+        font-size: 2.5rem;
+    }
+}

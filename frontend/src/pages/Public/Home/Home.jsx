@@ -190,7 +190,13 @@ const Home = () => {
             </section>
 
             <footer className="footer-home">
-                <p>&copy; 2026 FormationApp. Tous droits réservés.</p>
+                <div className="footer-content">
+                    <p>&copy; 2026 FormationApp. Tous droits réservés.</p>
+                    <div className="footer-links">
+                        <Link to="/join-as-trainer">Devenir formateur</Link>
+                        <Link to="/login">Espace Administration</Link>
+                    </div>
+                </div>
             </footer>
         </div>
     );
