@@ -5,6 +5,7 @@ const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
 
 // Public route to view formations
 router.get('/', formationController.getAllFormations);
+router.get('/:id', formationController.getFormationById);
 
 // Protected route to add formation (Admin only)
 router.post('/', verifyToken, isAdmin, formationController.addFormation);

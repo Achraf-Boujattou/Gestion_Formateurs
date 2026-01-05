@@ -1,0 +1,136 @@
+.inscriptions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.inscription-card {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inscr-status-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.inscr-status-badge[data-status='en_attente'] {
+    background: #fffbeb;
+    color: #b45309;
+}
+
+.inscr-status-badge[data-status='valide'] {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.inscr-status-badge[data-status='annule'] {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.inscr-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.inscr-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--accent-gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.inscr-header h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.formation-tag {
+    font-size: 0.85rem;
+    color: var(--accent-600);
+    font-weight: 700;
+    margin-top: 0.25rem;
+}
+
+.inscr-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #f8fafc;
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.detail-item svg {
+    color: var(--accent-500);
+}
+
+.inscr-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.inscr-actions button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-approve {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.btn-reject {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.btn-approve:hover {
+    background: #16a34a;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-reject:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-2px);
+}

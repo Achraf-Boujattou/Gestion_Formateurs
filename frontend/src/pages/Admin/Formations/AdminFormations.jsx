@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiEdit2, FiTrash2, FiPlus, FiBook, FiCheckCircle, FiAlertCircle, FiClock, FiDollarSign } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiPlus, FiBook, FiCheckCircle, FiAlertCircle, FiClock, FiDollarSign, FiTag, FiMapPin, FiCalendar } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './AdminFormations.css';
 
@@ -15,7 +15,10 @@ const AdminFormations = () => {
         nombre_heures: '',
         cout: '',
         objectifs: '',
-        programme: ''
+        programme: '',
+        categorie: 'Informatique',
+        ville: 'Casablanca',
+        date_formation: ''
     });
     const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -36,7 +39,10 @@ const AdminFormations = () => {
 
     const handleOpenModal = () => {
         setIsEditMode(false);
-        setFormData({ titre: '', nombre_heures: '', cout: '', objectifs: '', programme: '' });
+        setFormData({
+            titre: '', nombre_heures: '', cout: '', objectifs: '', programme: '',
+            categorie: 'Informatique', ville: 'Casablanca', date_formation: ''
+        });
         setShowModal(true);
     };
 
@@ -48,7 +54,10 @@ const AdminFormations = () => {
             nombre_heures: formation.nombre_heures,
             cout: formation.cout,
             objectifs: formation.objectifs,
-            programme: formation.programme
+            programme: formation.programme,
+            categorie: formation.categorie || 'Informatique',
+            ville: formation.ville || 'Casablanca',
+            date_formation: formation.date_formation ? formation.date_formation.split('T')[0] : ''
         });
         setShowModal(true);
     };
@@ -95,7 +104,6 @@ const AdminFormations = () => {
                 if (res.data.Status === "Success") {
                     setMessage({ type: 'success', text: isEditMode ? 'Formation modifiée !' : 'Formation ajoutée !' });
                     setShowModal(false);
-                    setFormData({ titre: '', nombre_heures: '', cout: '', objectifs: '', programme: '' });
                     fetchFormations();
                     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
                 } else {
@@ -132,10 +140,10 @@ const AdminFormations = () => {
                     <table className="formations-table">
                         <thead>
                             <tr>
-                                <th>Titre</th>
-                                <th>Heures</th>
+                                <th>Titre & Catégorie</th>
+                                <th>Localisation</th>
+                                <th>Date & Heures</th>
                                 <th>Coût (€)</th>
-                                <th>Objectifs</th>
                                 <th style={{ textAlign: 'right' }}>Actions</th>
                             </tr>
                         </thead>
@@ -145,15 +153,21 @@ const AdminFormations = () => {
                                     <td>
                                         <div className="formation-info">
                                             <strong>{formation.titre}</strong>
+                                            <span className="cat-text"><FiTag /> {formation.categorie}</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="val-badge"><FiClock /> {formation.nombre_heures}h</div>
+                                        <div className="val-badge"><FiMapPin /> {formation.ville}</div>
+                                    </td>
+                                    <td>
+                                        <div className="date-hours-info">
+                                            {formation.date_formation && <span className="date-text"><FiCalendar /> {new Date(formation.date_formation).toLocaleDateString()}</span>}
+                                            <span className="hours-text"><FiClock /> {formation.nombre_heures}h</span>
+                                        </div>
                                     </td>
                                     <td>
                                         <div className="val-badge price"><FiDollarSign /> {formation.cout}€</div>
                                     </td>
-                                    <td><p className="goal-text">{formation.objectifs.substring(0, 50)}...</p></td>
                                     <td>
                                         <div className="actions-cell">
                                             <button className="btn-action btn-edit" onClick={() => handleEdit(formation)} title="Modifier">
@@ -178,67 +192,60 @@ const AdminFormations = () => {
                 {/* Modal for Adding/Editing Formation */}
                 {showModal && (
                     <div className="modal-overlay">
-                        <div className="modal-content">
+                        <div className="modal-content large">
                             <div className="modal-header">
                                 <h3>{isEditMode ? 'Modifier la Formation' : 'Ajouter une Formation'}</h3>
                                 <button className="close-btn" onClick={() => setShowModal(false)}>&times;</button>
                             </div>
                             <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label className="form-label">Titre de la formation</label>
-                                    <input
-                                        type="text"
-                                        name="titre"
-                                        className="form-input"
-                                        value={formData.titre}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                <div style={{ display: 'flex', gap: '1rem' }}>
-                                    <div className="form-group" style={{ flex: 1 }}>
-                                        <label className="form-label">Heures</label>
-                                        <input
-                                            type="number"
-                                            name="nombre_heures"
-                                            className="form-input"
-                                            value={formData.nombre_heures}
-                                            onChange={handleChange}
-                                            required
-                                        />
+                                <div className="form-grid">
+                                    <div className="form-group span-2">
+                                        <label className="form-label">Titre de la formation</label>
+                                        <input type="text" name="titre" className="form-input" value={formData.titre} onChange={handleChange} required />
                                     </div>
-                                    <div className="form-group" style={{ flex: 1 }}>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Catégorie</label>
+                                        <select name="categorie" className="form-input" value={formData.categorie} onChange={handleChange}>
+                                            <option value="Informatique">Informatique</option>
+                                            <option value="Management">Management</option>
+                                            <option value="Soft Skills">Soft Skills</option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="Design">Design</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Ville</label>
+                                        <input type="text" name="ville" className="form-input" value={formData.ville} onChange={handleChange} />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Date prévue</label>
+                                        <input type="date" name="date_formation" className="form-input" value={formData.date_formation} onChange={handleChange} />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">Nombre d'heures</label>
+                                        <input type="number" name="nombre_heures" className="form-input" value={formData.nombre_heures} onChange={handleChange} required />
+                                    </div>
+
+                                    <div className="form-group">
                                         <label className="form-label">Coût (€)</label>
-                                        <input
-                                            type="number"
-                                            name="cout"
-                                            className="form-input"
-                                            value={formData.cout}
-                                            onChange={handleChange}
-                                            required
-                                        />
+                                        <input type="number" name="cout" className="form-input" value={formData.cout} onChange={handleChange} required />
+                                    </div>
+
+                                    <div className="form-group span-2">
+                                        <label className="form-label">Objectifs Pédagogiques</label>
+                                        <textarea name="objectifs" className="form-input textarea-field" value={formData.objectifs} onChange={handleChange} required />
+                                    </div>
+
+                                    <div className="form-group span-2">
+                                        <label className="form-label">Programme Détaillé</label>
+                                        <textarea name="programme" className="form-input textarea-field" value={formData.programme} onChange={handleChange} required />
                                     </div>
                                 </div>
-                                <div className="form-group">
-                                    <label className="form-label">Objectifs Pédagogiques</label>
-                                    <textarea
-                                        name="objectifs"
-                                        className="form-input textarea-field"
-                                        value={formData.objectifs}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label className="form-label">Programme Détaillé</label>
-                                    <textarea
-                                        name="programme"
-                                        className="form-input textarea-field"
-                                        value={formData.programme}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
+
                                 <div className="modal-actions">
                                     <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
                                     <button type="submit" className="btn-primary" style={{ marginTop: 0 }}>

@@ -1,14 +1,14 @@
 const db = require('../config/db');
 
 exports.addFormation = (req, res) => {
-    const { titre, nombre_heures, cout, objectifs, programme } = req.body;
+    const { titre, nombre_heures, cout, objectifs, programme, categorie, ville, date_formation } = req.body;
 
     if (!titre || !nombre_heures || !cout || !objectifs || !programme) {
         return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
     }
 
-    const sql = "INSERT INTO formations (titre, nombre_heures, cout, objectifs, programme) VALUES (?, ?, ?, ?, ?)";
-    const values = [titre, nombre_heures, cout, objectifs, programme];
+    const sql = "INSERT INTO formations (titre, nombre_heures, cout, objectifs, programme, categorie, ville, date_formation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const values = [titre, nombre_heures, cout, objectifs, programme, categorie || 'Informatique', ville || 'Casablanca', date_formation || null];
 
     db.query(sql, values, (err, result) => {
         if (err) {
@@ -32,14 +32,24 @@ exports.getAllFormations = (req, res) => {
 
 exports.updateFormation = (req, res) => {
     const { id } = req.params;
-    const { titre, nombre_heures, cout, objectifs, programme } = req.body; // Updated data
+    const { titre, nombre_heures, cout, objectifs, programme, categorie, ville, date_formation } = req.body; // Updated data
 
     if (!titre || !nombre_heures || !cout || !objectifs || !programme) {
         return res.status(400).json({ Error: "Tous les champs sont obligatoires." });
     }
 
-    const sql = "UPDATE formations SET titre=?, nombre_heures=?, cout=?, objectifs=?, programme=? WHERE id=?";
-    const values = [titre, nombre_heures, cout, objectifs, programme, id];
+    const sql = "UPDATE formations SET titre=?, nombre_heures=?, cout=?, objectifs=?, programme=?, categorie=?, ville=?, date_formation=? WHERE id=?";
+    const values = [
+        titre,
+        nombre_heures,
+        cout,
+        objectifs,
+        programme,
+        categorie || 'Informatique',
+        ville || 'Casablanca',
+        date_formation || null,
+        id
+    ];
 
     db.query(sql, values, (err, result) => {
         if (err) {
@@ -61,4 +71,13 @@ exports.deleteFormation = (req, res) => {
         }
         return res.json({ Status: "Success", Message: "Formation supprimée." });
     })
+};
+
+exports.getFormationById = (req, res) => {
+    const { id } = req.params;
+    const sql = "SELECT * FROM formations WHERE id = ?";
+    db.query(sql, [id], (err, data) => {
+        if (err || data.length === 0) return res.status(404).json({ Error: "Formation non trouvée" });
+        return res.json(data[0]);
+    });
 };
