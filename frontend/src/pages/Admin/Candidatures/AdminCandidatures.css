@@ -1,193 +1,300 @@
-/* --- Admin Candidatures Modern Styles --- */
+/* ==========================================
+   ADMIN CANDIDATURES - Academic Design with Dark Mode
+   ========================================== */
+
 .candidatures-container {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
 }
 
 .cand-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
 }
 
+/* Card Design */
 .cand-card {
     background: white;
-    border-radius: var(--radius-xl);
-    padding: 2rem;
-    box-shadow: var(--shadow-card);
-    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
     position: relative;
     overflow: hidden;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cand-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-float);
-    border-color: var(--primary-light);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(14, 165, 233, 0.15);
+    border-color: #bae6fd;
 }
 
+/* Status Badge */
 .cand-status {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 1.25rem;
+    right: 1.25rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 800;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 700;
     text-transform: uppercase;
-    padding: 0.4rem 0.75rem;
-    border-radius: var(--radius-full);
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
 }
 
 .cand-status[data-status='en_attente'] {
-    background: var(--warning-bg);
-    color: var(--warning);
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
 }
 
 .cand-status[data-status='valide'] {
-    background: var(--success-bg);
-    color: var(--success);
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
 }
 
 .cand-status[data-status='refuse'] {
-    background: var(--danger-bg);
-    color: var(--danger);
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
 }
 
+/* Header */
 .cand-header {
     display: flex;
-    gap: 1.25rem;
+    gap: 1rem;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .cand-avatar {
-    width: 3.5rem;
-    height: 3.5rem;
-    background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
     color: white;
-    border-radius: 50%;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
 }
 
 .cand-header h3 {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 0.2rem;
     font-weight: 700;
 }
 
 .cand-header p {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: #64748b;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
+/* Body */
 .cand-body {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .info-field {
-    font-size: 0.95rem;
-    color: var(--text-primary);
+    font-size: 0.9rem;
+    color: #334155;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-weight: 600;
+    gap: 0.6rem;
+    font-weight: 500;
 }
 
 .info-field svg {
-    color: var(--primary);
+    color: #0ea5e9;
+    font-size: 1rem;
 }
 
 .skills-area label {
     display: block;
-    font-size: 0.75rem;
-    font-weight: 800;
+    font-size: 0.7rem;
+    font-weight: 700;
     text-transform: uppercase;
-    color: var(--text-secondary);
-    margin-bottom: 0.75rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
 }
 
 .skills-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .skill-tag {
-    background: #f1f5f9;
-    color: var(--text-secondary);
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    color: #0369a1;
     padding: 0.25rem 0.6rem;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 600;
 }
 
+/* Actions */
 .cand-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-light);
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e2e8f0;
 }
 
 .btn-approve {
-    background: var(--success);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
     color: white;
     border: none;
     padding: 0.75rem;
-    border-radius: var(--radius-md);
+    border-radius: 10px;
     font-weight: 700;
+    font-size: 0.85rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    transition: var(--transition);
+    gap: 0.4rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
 }
 
 .btn-approve:hover {
-    background: #15803d;
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2);
+    box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
 }
 
 .btn-reject {
     background: white;
-    color: var(--danger);
-    border: 1.5px solid var(--danger-bg);
+    color: #dc2626;
+    border: 1px solid #fecaca;
     padding: 0.75rem;
-    border-radius: var(--radius-md);
+    border-radius: 10px;
     font-weight: 700;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.25s ease;
 }
 
 .btn-reject:hover {
-    background: var(--danger-bg);
-    border-color: var(--danger);
+    background: #fef2f2;
+    border-color: #f87171;
 }
 
+/* Toast */
 .message-toast {
-    background: var(--text-primary);
+    background: #0f172a;
     color: white;
-    padding: 1rem 2rem;
-    border-radius: var(--radius-lg);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   DARK MODE
+   ========================================== */
+[data-theme="dark"] .cand-card,
+.dark-mode .cand-card {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .cand-card:hover,
+.dark-mode .cand-card:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+    box-shadow: 0 12px 24px -8px rgba(14, 165, 233, 0.2);
+}
+
+[data-theme="dark"] .cand-header h3,
+.dark-mode .cand-header h3 {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .cand-header p,
+.dark-mode .cand-header p {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .cand-avatar,
+.dark-mode .cand-avatar {
+    background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 100%);
+    box-shadow: 0 4px 12px rgba(34, 211, 238, 0.25);
+}
+
+[data-theme="dark"] .info-field,
+.dark-mode .info-field {
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .info-field svg,
+.dark-mode .info-field svg {
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .skills-area label,
+.dark-mode .skills-area label {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .skill-tag,
+.dark-mode .skill-tag {
+    background: rgba(14, 165, 233, 0.2);
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .cand-actions,
+.dark-mode .cand-actions {
+    border-top-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .cand-status[data-status='en_attente'],
+.dark-mode .cand-status[data-status='en_attente'] {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+[data-theme="dark"] .cand-status[data-status='valide'],
+.dark-mode .cand-status[data-status='valide'] {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+[data-theme="dark"] .cand-status[data-status='refuse'],
+.dark-mode .cand-status[data-status='refuse'] {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+[data-theme="dark"] .btn-reject,
+.dark-mode .btn-reject {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: #f87171;
+}
+
+[data-theme="dark"] .btn-reject:hover,
+.dark-mode .btn-reject:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+[data-theme="dark"] .message-toast,
+.dark-mode .message-toast {
+    background: #0ea5e9;
 }

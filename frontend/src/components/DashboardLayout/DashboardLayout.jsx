@@ -16,7 +16,8 @@ const DashboardLayout = ({ children, role, name }) => {
         <div className="dashboard-layout">
             <aside className="sidebar">
                 <Link to={`/${role}`} className="sidebar-title" style={{ textDecoration: 'none' }}>
-                    <FiLayout className="logo-icon" /> Formation<span>App</span>
+                    <div className="logo-icon">BD</div>
+                    <span>Formation</span>
                 </Link>
                 <nav>
                     <NavLink to={`/${role}`} className="nav-link" end>

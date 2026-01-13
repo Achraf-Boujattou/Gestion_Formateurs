@@ -201,7 +201,7 @@ const Entreprises = () => {
                                             <input
                                                 type="tel"
                                                 name="telephone"
-                                                placeholder="+33 6 12 34 56 78"
+                                                placeholder="+216 99-88-60-00"
                                                 value={formData.telephone}
                                                 onChange={handleChange}
                                             />

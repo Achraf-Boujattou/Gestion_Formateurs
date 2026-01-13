@@ -44,22 +44,22 @@ const Login = ({ setAuth }) => {
         <div className="auth-container">
             <div className="auth-card animate-scale-in">
                 <div className="auth-logo">
-                    <div className="logo-circle">F</div>
+                    <div className="logo-circle">BD</div>
                 </div>
-                <h1 className="auth-title">Connexion</h1>
-                <p className="auth-subtitle">Accédez à votre espace de gestion formation</p>
+                <h1 className="auth-title">Espace de Connexion</h1>
+                <p className="auth-subtitle">Accédez à votre plateforme de formation professionnelle</p>
 
                 {error && <div className="error-message">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label className="form-label">Email</label>
+                        <label className="form-label">Adresse email</label>
                         <div className="input-wrapper">
                             <FiMail className="input-icon" />
                             <input
                                 type="email"
                                 className="form-input"
-                                placeholder="Entrez votre email"
+                                placeholder="votre.email@exemple.com"
                                 onChange={e => setValues({ ...values, email: e.target.value })}
                                 required
                             />
@@ -83,7 +83,7 @@ const Login = ({ setAuth }) => {
                     </div>
 
                     <button type="submit" className="btn-primary">
-                        Se Connecter <FiArrowRight />
+                        Accéder à mon espace <FiArrowRight />
                     </button>
                 </form>
 

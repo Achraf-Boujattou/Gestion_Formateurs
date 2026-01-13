@@ -180,120 +180,144 @@ const AdminFormations = () => {
                                 <button className="close-btn" onClick={() => setShowModal(false)}>&times;</button>
                             </div>
                             <form onSubmit={handleSubmit} className="premium-form">
-                                <div className="form-grid">
-                                    <div className="form-group full-width">
-                                        <label>Titre de la formation <span className="req">*</span></label>
-                                        <div className="input-with-icon">
-                                            <FiBook className="field-icon" />
-                                            <input
-                                                type="text"
-                                                name="titre"
-                                                placeholder="Ex: Masterclass React & Node.js"
-                                                value={formData.titre}
-                                                onChange={handleChange}
-                                                required
-                                            />
+                                <div className="form-sections-container">
+                                    {/* Section 1: Informations Générales */}
+                                    <div className="form-section-modern animate-slide-up stagger-1">
+                                        <div className="section-header-mini">
+                                            <FiTag /> <span>Généralités</span>
+                                        </div>
+                                        <div className="form-grid">
+                                            <div className="form-group full-width">
+                                                <label>Titre de la formation <span className="req">*</span></label>
+                                                <div className="input-with-icon">
+                                                    <FiBook className="field-icon" />
+                                                    <input
+                                                        type="text"
+                                                        name="titre"
+                                                        placeholder="Ex: Masterclass React & Node.js"
+                                                        value={formData.titre}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label>Catégorie</label>
+                                                <div className="input-with-icon">
+                                                    <FiTag className="field-icon" />
+                                                    <select name="categorie" value={formData.categorie} onChange={handleChange}>
+                                                        <option value="Informatique">Informatique</option>
+                                                        <option value="Management">Management</option>
+                                                        <option value="Soft Skills">Soft Skills</option>
+                                                        <option value="Marketing">Marketing</option>
+                                                        <option value="Design">Design</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label>Ville</label>
+                                                <div className="input-with-icon">
+                                                    <FiMapPin className="field-icon" />
+                                                    <input
+                                                        type="text"
+                                                        name="ville"
+                                                        placeholder="Ex: Casablanca"
+                                                        value={formData.ville}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Catégorie</label>
-                                        <div className="input-with-icon">
-                                            <FiTag className="field-icon" />
-                                            <select name="categorie" value={formData.categorie} onChange={handleChange}>
-                                                <option value="Informatique">Informatique</option>
-                                                <option value="Management">Management</option>
-                                                <option value="Soft Skills">Soft Skills</option>
-                                                <option value="Marketing">Marketing</option>
-                                                <option value="Design">Design</option>
-                                            </select>
+                                    {/* Section 2: Logistique & Coûts */}
+                                    <div className="form-section-modern animate-slide-up stagger-2">
+                                        <div className="section-header-mini">
+                                            <FiClock /> <span>Logistique & Coût</span>
+                                        </div>
+                                        <div className="form-grid">
+                                            <div className="form-group">
+                                                <label>Date de démarrage</label>
+                                                <div className="input-with-icon">
+                                                    <FiCalendar className="field-icon" />
+                                                    <input
+                                                        type="date"
+                                                        name="date_formation"
+                                                        value={formData.date_formation}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label>Nombre d'heures</label>
+                                                <div className="input-with-icon">
+                                                    <FiClock className="field-icon" />
+                                                    <input
+                                                        type="number"
+                                                        name="nombre_heures"
+                                                        placeholder="Ex: 35"
+                                                        value={formData.nombre_heures}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group full-width">
+                                                <label>Coût par participant (€)</label>
+                                                <div className="input-with-icon">
+                                                    <FiDollarSign className="field-icon" />
+                                                    <input
+                                                        type="number"
+                                                        name="cout"
+                                                        placeholder="Ex: 1500"
+                                                        value={formData.cout}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Ville</label>
-                                        <div className="input-with-icon">
-                                            <FiMapPin className="field-icon" />
-                                            <input
-                                                type="text"
-                                                name="ville"
-                                                placeholder="Ex: Casablanca"
-                                                value={formData.ville}
-                                                onChange={handleChange}
-                                            />
+                                    {/* Section 3: Contenu Pédagogique */}
+                                    <div className="form-section-modern animate-slide-up stagger-3">
+                                        <div className="section-header-mini">
+                                            <FiTarget /> <span>Contenu Pédagogique</span>
                                         </div>
-                                    </div>
+                                        <div className="form-grid">
+                                            <div className="form-group full-width">
+                                                <label>Objectifs Pédagogiques</label>
+                                                <div className="input-with-icon">
+                                                    <FiTarget className="field-icon" />
+                                                    <textarea
+                                                        name="objectifs"
+                                                        placeholder="Quels sont les compétences visées..."
+                                                        value={formData.objectifs}
+                                                        onChange={handleChange}
+                                                        required
+                                                        rows="3"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                    <div className="form-group">
-                                        <label>Date de démarrage</label>
-                                        <div className="input-with-icon">
-                                            <FiCalendar className="field-icon" />
-                                            <input
-                                                type="date"
-                                                name="date_formation"
-                                                value={formData.date_formation}
-                                                onChange={handleChange}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label>Nombre d'heures</label>
-                                        <div className="input-with-icon">
-                                            <FiClock className="field-icon" />
-                                            <input
-                                                type="number"
-                                                name="nombre_heures"
-                                                placeholder="Ex: 35"
-                                                value={formData.nombre_heures}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label>Coût par participant (€)</label>
-                                        <div className="input-with-icon">
-                                            <FiDollarSign className="field-icon" />
-                                            <input
-                                                type="number"
-                                                name="cout"
-                                                placeholder="Ex: 1500"
-                                                value={formData.cout}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label>Objectifs Pédagogiques</label>
-                                        <div className="input-with-icon">
-                                            <FiTarget className="field-icon" />
-                                            <textarea
-                                                name="objectifs"
-                                                placeholder="Quels sont les compétences visées..."
-                                                value={formData.objectifs}
-                                                onChange={handleChange}
-                                                required
-                                                rows="3"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label>Programme Détaillé</label>
-                                        <div className="input-with-icon">
-                                            <FiList className="field-icon" />
-                                            <textarea
-                                                name="programme"
-                                                placeholder="Module 1: Introduction..."
-                                                value={formData.programme}
-                                                onChange={handleChange}
-                                                required
-                                                rows="4"
-                                            />
+                                            <div className="form-group full-width">
+                                                <label>Programme Détaillé</label>
+                                                <div className="input-with-icon">
+                                                    <FiList className="field-icon" />
+                                                    <textarea
+                                                        name="programme"
+                                                        placeholder="Module 1: Introduction..."
+                                                        value={formData.programme}
+                                                        onChange={handleChange}
+                                                        required
+                                                        rows="4"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { FiCalendar, FiPlus, FiTrash2, FiClock, FiCheckCircle, FiAlertCircle, FiInfo, FiChevronRight } from 'react-icons/fi';
+import { FiCalendar, FiPlus, FiTrash2, FiClock, FiCheckCircle, FiAlertCircle, FiBookOpen, FiUser, FiBriefcase, FiList } from 'react-icons/fi';
 import DashboardLayout from '../../../components/DashboardLayout/DashboardLayout';
 import './Planning.css';
 
@@ -116,15 +116,15 @@ const Planning = () => {
     return (
         <DashboardLayout role={role} name={name}>
             <div className="planning-container">
-                <div className="planning-header">
+                <div className="planning-header animate-slide-up">
                     <div className="title-section">
-                        <h2>Planification des Formations</h2>
-                        <p>Organisez les sessions, affectez les formateurs et gérez le calendrier</p>
+                        <h1>Planification des Formations</h1>
+                        <p>Configurez les sessions, coordonnez les formateurs et optimisez le calendrier opérationnel</p>
                     </div>
                 </div>
 
                 {message.text && (
-                    <div className={`status-alert ${message.type}`}>
+                    <div className={`status-alert ${message.type} animate-scale-in`}>
                         {message.type === 'success' ? <FiCheckCircle /> : <FiAlertCircle />}
                         <span>{message.text}</span>
                     </div>
@@ -138,45 +138,54 @@ const Planning = () => {
                             <h3>Nouvelle Session</h3>
                         </div>
                         <form onSubmit={handleSubmit}>
-                            <div className="form-group-modern">
-                                <label>Programme de Formation</label>
-                                <select
-                                    value={formData.formation_id}
-                                    onChange={(e) => setFormData({ ...formData, formation_id: e.target.value })}
-                                    required
-                                >
-                                    <option value="">Sélectionner une formation...</option>
-                                    {dependencies.formations.map(f => <option key={f.id} value={f.id}>{f.titre}</option>)}
-                                </select>
+                            <div className="form-group-modern animate-slide-up stagger-1">
+                                <label><FiBookOpen className="label-icon" /> Programme de Formation</label>
+                                <div className="input-with-icon">
+                                    <FiBookOpen className="field-icon" />
+                                    <select
+                                        value={formData.formation_id}
+                                        onChange={(e) => setFormData({ ...formData, formation_id: e.target.value })}
+                                        required
+                                    >
+                                        <option value="">Sélectionner une formation...</option>
+                                        {dependencies.formations.map(f => <option key={f.id} value={f.id}>{f.titre}</option>)}
+                                    </select>
+                                </div>
                             </div>
 
-                            <div className="form-group-modern">
-                                <label>Formateur Intervenant</label>
-                                <select
-                                    value={formData.formateur_id}
-                                    onChange={(e) => setFormData({ ...formData, formateur_id: e.target.value })}
-                                    required
-                                >
-                                    <option value="">Sélectionner un formateur...</option>
-                                    {dependencies.formateurs.map(f => <option key={f.id} value={f.id}>{f.nom} {f.prenom}</option>)}
-                                </select>
+                            <div className="form-group-modern animate-slide-up stagger-2">
+                                <label><FiUser className="label-icon" /> Formateur Intervenant</label>
+                                <div className="input-with-icon">
+                                    <FiUser className="field-icon" />
+                                    <select
+                                        value={formData.formateur_id}
+                                        onChange={(e) => setFormData({ ...formData, formateur_id: e.target.value })}
+                                        required
+                                    >
+                                        <option value="">Sélectionner un formateur...</option>
+                                        {dependencies.formateurs.map(f => <option key={f.id} value={f.id}>{f.nom} {f.prenom}</option>)}
+                                    </select>
+                                </div>
                             </div>
 
-                            <div className="form-group-modern">
-                                <label>Entreprise / Client</label>
-                                <select
-                                    value={formData.entreprise_id}
-                                    onChange={(e) => setFormData({ ...formData, entreprise_id: e.target.value })}
-                                    required
-                                >
-                                    <option value="">Sélectionner une entreprise...</option>
-                                    {dependencies.entreprises.map(e => <option key={e.id} value={e.id}>{e.nom}</option>)}
-                                </select>
+                            <div className="form-group-modern animate-slide-up stagger-3">
+                                <label><FiBriefcase className="label-icon" /> Entreprise / Client</label>
+                                <div className="input-with-icon">
+                                    <FiBriefcase className="field-icon" />
+                                    <select
+                                        value={formData.entreprise_id}
+                                        onChange={(e) => setFormData({ ...formData, entreprise_id: e.target.value })}
+                                        required
+                                    >
+                                        <option value="">Sélectionner une entreprise...</option>
+                                        {dependencies.entreprises.map(e => <option key={e.id} value={e.id}>{e.nom}</option>)}
+                                    </select>
+                                </div>
                             </div>
 
-                            <div className="calendar-section">
+                            <div className="calendar-section animate-slide-up stagger-4">
                                 <label>Sélection des dates (Calendrier)</label>
-                                <div className="calendar-wrapper">
+                                <div className="calendar-wrapper-premium">
                                     <Calendar
                                         onChange={handleDateChange}
                                         tileClassName={({ date }) => {
@@ -187,8 +196,18 @@ const Planning = () => {
                                 </div>
                             </div>
 
-                            <button type="submit" className="btn-submit-planning" disabled={loading}>
-                                {loading ? 'Enregistrement...' : 'Planifier la Session'}
+                            <button type="submit" className="btn-submit-planning-premium" disabled={loading}>
+                                {loading ? (
+                                    <>
+                                        <span className="loader-sm"></span>
+                                        <span>Enregistrement...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FiCheckCircle />
+                                        <span>Planifier la Session</span>
+                                    </>
+                                )}
                             </button>
                         </form>
                     </div>
@@ -200,17 +219,18 @@ const Planning = () => {
                                 <FiCalendar className="icon-main" />
                                 <h3>Dates Sélectionnées ({formData.dates.length})</h3>
                             </div>
-                            <div className="dates-list">
+                            <div className="dates-list custom-scrollbar">
                                 {formData.dates.length === 0 ? (
-                                    <div className="empty-state">
-                                        <FiInfo />
-                                        <span>Cliquez sur le calendrier pour ajouter des dates</span>
+                                    <div className="empty-state-glass">
+                                        <FiCalendar className="pulse" />
+                                        <span>Sélectionnez les dates sur le calendrier pour commencer</span>
                                     </div>
                                 ) : (
-                                    formData.dates.map(d => (
-                                        <div key={d} className="date-tag">
+                                    formData.dates.map((d, index) => (
+                                        <div key={d} className={`date-chip animate-slide-right stagger-${(index % 5) + 1}`}>
+                                            <FiCalendar className="chip-icon" />
                                             <span>{new Date(d).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'long' })}</span>
-                                            <button type="button" onClick={() => removeDate(d)}><FiTrash2 /></button>
+                                            <button type="button" className="remove-chip" onClick={() => removeDate(d)}><FiTrash2 /></button>
                                         </div>
                                     ))
                                 )}
@@ -222,21 +242,32 @@ const Planning = () => {
                                 <FiClock className="icon-main" />
                                 <h3>Sessions Récentes</h3>
                             </div>
-                            <div className="plannings-list">
+                            <div className="plannings-list custom-scrollbar">
                                 {plannings.length === 0 ? (
-                                    <p className="no-data">Aucune planification trouvée.</p>
+                                    <div className="empty-state-simple">
+                                        <p>Aucune historique de planification.</p>
+                                    </div>
                                 ) : (
-                                    plannings.map(p => (
-                                        <div key={p.id} className="planning-item">
+                                    plannings.map((p, index) => (
+                                        <div key={p.id} className={`planning-card-item animate-slide-up stagger-${(index % 5) + 1}`}>
+                                            <div className="card-indicator"></div>
                                             <div className="planning-info">
-                                                <h4>{p.formation_titre}</h4>
-                                                <p className="p-meta">Client: <strong>{p.entreprise_nom}</strong></p>
-                                                <p className="p-dates">{formatDates(p.dates)}</p>
-                                                <div className="formateur-badge">
-                                                    {p.formateur_prenom} {p.formateur_nom}
+                                                <div className="info-main">
+                                                    <h4>{p.formation_titre}</h4>
+                                                    <span className="badge-company">{p.entreprise_nom}</span>
+                                                </div>
+                                                <div className="info-meta">
+                                                    <div className="meta-item">
+                                                        <FiCalendar />
+                                                        <span>{formatDates(p.dates)}</span>
+                                                    </div>
+                                                    <div className="meta-item">
+                                                        <FiUser />
+                                                        <span className="badge-formateur">{p.formateur_prenom} {p.formateur_nom}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <button className="btn-delete-planning" onClick={() => handleDelete(p.id)}>
+                                            <button className="btn-action-delete" onClick={() => handleDelete(p.id)} title="Supprimer">
                                                 <FiTrash2 />
                                             </button>
                                         </div>

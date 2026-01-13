@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import AnimatedBackground from './components/AnimatedBackground';
+import ThemeToggle from './components/ThemeToggle';
 import Home from './pages/Public/Home/Home';
 import RegisterFormation from './pages/Public/Register/RegisterFormation';
 import Login from './components/Login/Login';
@@ -65,75 +67,79 @@ function App() {
     if (loading) return <div>Chargement...</div>;
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/register-formation/:id" element={<RegisterFormation />} />
-                <Route path="/evaluation/:formationId" element={<EvaluationForm />} />
-                <Route path="/join-as-trainer" element={<JoinAsTrainer />} />
+        <>
+            <AnimatedBackground />
+            <ThemeToggle />
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/register-formation/:id" element={<RegisterFormation />} />
+                    <Route path="/evaluation/:formationId" element={<EvaluationForm />} />
+                    <Route path="/join-as-trainer" element={<JoinAsTrainer />} />
 
-                <Route
-                    path="/login"
-                    element={
-                        !auth.isAuthenticated ?
-                            <Login setAuth={setAuth} /> :
-                            <Navigate to={`/${auth.role}`} replace />
-                    }
-                />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route
+                        path="/login"
+                        element={
+                            !auth.isAuthenticated ?
+                                <Login setAuth={setAuth} /> :
+                                <Navigate to={`/${auth.role}`} replace />
+                        }
+                    />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
 
-                <Route
-                    path="/admin/*"
-                    element={
-                        <PrivateRoute allowedRoles={['admin']}>
-                            <Routes>
-                                <Route index element={<AdminDashboard />} />
-                                <Route path="formations" element={<AdminFormations />} />
-                                <Route path="utilisateurs" element={<AdminUsers />} />
-                                <Route path="entreprises" element={<Entreprises />} />
-                                <Route path="planning" element={<Planning />} />
-                                <Route path="inscriptions" element={<AdminInscriptions />} />
-                                <Route path="groupes" element={<AdminGroupes />} />
-                                <Route path="evaluations" element={<AdminEvaluations />} />
-                                <Route path="candidatures" element={<AdminCandidatures />} />
-                            </Routes>
-                        </PrivateRoute>
-                    }
-                />
+                    <Route
+                        path="/admin/*"
+                        element={
+                            <PrivateRoute allowedRoles={['admin']}>
+                                <Routes>
+                                    <Route index element={<AdminDashboard />} />
+                                    <Route path="formations" element={<AdminFormations />} />
+                                    <Route path="utilisateurs" element={<AdminUsers />} />
+                                    <Route path="entreprises" element={<Entreprises />} />
+                                    <Route path="planning" element={<Planning />} />
+                                    <Route path="inscriptions" element={<AdminInscriptions />} />
+                                    <Route path="groupes" element={<AdminGroupes />} />
+                                    <Route path="evaluations" element={<AdminEvaluations />} />
+                                    <Route path="candidatures" element={<AdminCandidatures />} />
+                                </Routes>
+                            </PrivateRoute>
+                        }
+                    />
 
-                <Route
-                    path="/formateur/*"
-                    element={
-                        <PrivateRoute allowedRoles={['formateur']}>
-                            <Routes>
-                                <Route index element={<FormateurDashboard />} />
-                                <Route path="cours" element={<MyCourses />} />
-                                <Route path="etudiants" element={<MyStudents />} />
-                            </Routes>
-                        </PrivateRoute>
-                    }
-                />
+                    <Route
+                        path="/formateur/*"
+                        element={
+                            <PrivateRoute allowedRoles={['formateur']}>
+                                <Routes>
+                                    <Route index element={<FormateurDashboard />} />
+                                    <Route path="cours" element={<MyCourses />} />
+                                    <Route path="etudiants" element={<MyStudents />} />
+                                </Routes>
+                            </PrivateRoute>
+                        }
+                    />
 
-                <Route
-                    path="/assistant/*"
-                    element={
-                        <PrivateRoute allowedRoles={['assistant']}>
-                            <Routes>
-                                <Route index element={<AssistantDashboard />} />
-                                <Route path="entreprises" element={<Entreprises />} />
-                                <Route path="planning" element={<Planning />} />
-                                <Route path="inscriptions" element={<AdminInscriptions />} />
-                                <Route path="groupes" element={<AdminGroupes />} />
-                                <Route path="evaluations" element={<AdminEvaluations />} />
-                            </Routes>
-                        </PrivateRoute>
-                    }
-                />
+                    <Route
+                        path="/assistant/*"
+                        element={
+                            <PrivateRoute allowedRoles={['assistant']}>
+                                <Routes>
+                                    <Route index element={<AssistantDashboard />} />
+                                    <Route path="entreprises" element={<Entreprises />} />
+                                    <Route path="planning" element={<Planning />} />
+                                    <Route path="inscriptions" element={<AdminInscriptions />} />
+                                    <Route path="groupes" element={<AdminGroupes />} />
+                                    <Route path="evaluations" element={<AdminEvaluations />} />
+                                </Routes>
+                            </PrivateRoute>
+                        }
+                    />
 
-                <Route path="*" element={<Navigate to="/login" replace />} />
-            </Routes>
-        </BrowserRouter>
+                    <Route path="*" element={<Navigate to="/login" replace />} />
+                </Routes>
+            </BrowserRouter>
+        </>
     );
 }
 

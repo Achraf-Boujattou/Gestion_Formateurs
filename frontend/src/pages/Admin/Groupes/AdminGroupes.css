@@ -1,117 +1,262 @@
+/* ==========================================
+   ADMIN GROUPES - Academic Design with Dark Mode
+   ========================================== */
+
 .groupes-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .groupes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.5rem;
 }
 
+/* Card Design */
 .group-card {
-    padding: 2.5rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(14, 165, 233, 0.15);
+    border-color: #bae6fd;
 }
 
 .group-card-header {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
 }
 
 .g-icon-box {
-    width: 3.5rem;
-    height: 3.5rem;
-    background: #eef2ff;
-    color: var(--accent-600);
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    color: #0369a1;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-lg);
-    font-size: 1.5rem;
+    border-radius: 14px;
+    font-size: 1.35rem;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
 }
 
 .g-title-box h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    color: var(--text-main);
+    color: #0f172a;
     line-height: 1.2;
 }
 
 .g-title-box p {
-    font-size: 0.9rem;
-    color: var(--accent-600);
-    font-weight: 700;
+    font-size: 0.85rem;
+    color: #0ea5e9;
+    font-weight: 600;
     margin-top: 0.25rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
+/* Meta Section */
 .group-meta {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.6rem;
     padding: 1.25rem;
     background: #f8fafc;
-    border-radius: var(--radius-lg);
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
 }
 
 .meta-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.95rem;
-    color: var(--text-muted);
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: #64748b;
 }
 
 .meta-row strong {
-    color: var(--text-main);
+    color: #0f172a;
+    font-weight: 600;
 }
 
 .meta-row svg {
-    color: var(--accent-500);
+    color: #0ea5e9;
+    font-size: 1rem;
 }
 
+/* Actions */
 .group-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
+.group-actions button {
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+/* Members List */
 .members-list {
-    margin-top: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #f1f5f9;
+    margin-top: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e2e8f0;
 }
 
 .member-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #f8fafc;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.member-item:last-child {
+    border-bottom: none;
 }
 
 .member-item span {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.9rem;
-    color: var(--text-main);
+    color: #0f172a;
 }
 
 .member-item small {
-    color: var(--text-muted);
+    color: #64748b;
     font-size: 0.8rem;
 }
 
 .no-members {
     text-align: center;
-    color: var(--text-muted);
+    color: #94a3b8;
     font-style: italic;
     font-size: 0.9rem;
+    padding: 1rem 0;
+}
+
+/* ==========================================
+   DARK MODE
+   ========================================== */
+[data-theme="dark"] .group-card,
+.dark-mode .group-card {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .group-card:hover,
+.dark-mode .group-card:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+    box-shadow: 0 12px 24px -8px rgba(14, 165, 233, 0.2);
+}
+
+[data-theme="dark"] .g-icon-box,
+.dark-mode .g-icon-box {
+    background: rgba(14, 165, 233, 0.15);
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .g-title-box h3,
+.dark-mode .g-title-box h3 {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .g-title-box p,
+.dark-mode .g-title-box p {
+    color: #22d3ee;
+}
+
+[data-theme="dark"] .group-meta,
+.dark-mode .group-meta {
+    background: rgba(15, 23, 42, 0.5);
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .meta-row,
+.dark-mode .meta-row {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .meta-row strong,
+.dark-mode .meta-row strong {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .meta-row svg,
+.dark-mode .meta-row svg {
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .members-list,
+.dark-mode .members-list {
+    border-top-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .member-item,
+.dark-mode .member-item {
+    border-bottom-color: rgba(148, 163, 184, 0.1);
+}
+
+[data-theme="dark"] .member-item span,
+.dark-mode .member-item span {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .member-item small,
+.dark-mode .member-item small {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .no-members,
+.dark-mode .no-members {
+    color: #64748b;
+}
+
+/* Dark mode buttons */
+[data-theme="dark"] .group-actions button,
+.dark-mode .group-actions button {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .group-actions button:hover,
+.dark-mode .group-actions button:hover {
+    background: rgba(14, 165, 233, 0.15);
+    border-color: #0ea5e9;
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .group-actions button.btn-primary,
+.dark-mode .group-actions button.btn-primary {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1);
+    border-color: transparent;
+    color: white;
+}
+
+[data-theme="dark"] .group-actions button.btn-primary:hover,
+.dark-mode .group-actions button.btn-primary:hover {
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
 }

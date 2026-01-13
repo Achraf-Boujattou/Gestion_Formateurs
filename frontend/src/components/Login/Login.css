@@ -1,128 +1,126 @@
-/* --- Modern Clean Login Styles --- */
+/* ==========================================
+   LOGIN PAGE - Academic E-Learning Design
+   Professional, clean, with light/dark mode support
+   ========================================== */
 
+/* Container - Uses AnimatedBackground behind */
 .auth-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 2rem;
     position: relative;
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+    background: transparent;
 }
 
-/* Add a subtle decorative background blob */
-.auth-container::before {
-    content: '';
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-    top: 20%;
-    right: 10%;
-    z-index: 0;
-    pointer-events: none;
-    animation: float 8s ease-in-out infinite;
-}
-
-.auth-container::after {
-    content: '';
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(244, 63, 94, 0.1) 0%, transparent 70%);
-    bottom: 10%;
-    left: 10%;
-    z-index: 0;
-    pointer-events: none;
-    animation: float 10s ease-in-out infinite reverse;
-}
-
+/* ==========================================
+   AUTH CARD - Glassmorphism Style
+   ========================================== */
 .auth-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     width: 100%;
-    max-width: 460px;
-    padding: 3.5rem;
-    border-radius: var(--radius-2xl);
-    border: 1.5px solid var(--border-light);
-    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.1);
+    max-width: 440px;
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.5);
     position: relative;
     z-index: 10;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ==========================================
+   LOGO - Academic Branding
+   ========================================== */
 .auth-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .logo-circle {
-    width: 80px;
-    height: 80px;
-    background: var(--gradient-primary);
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%);
     color: white;
-    font-size: 2.25rem;
-    font-weight: 900;
+    font-size: 1.75rem;
+    font-weight: 800;
     font-family: 'Outfit', sans-serif;
-    border-radius: var(--radius-2xl);
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 8px 24px rgba(12, 74, 110, 0.35);
     position: relative;
+    letter-spacing: -0.02em;
 }
 
 .logo-circle::after {
     content: '';
     position: absolute;
-    inset: -4px;
-    border-radius: var(--radius-2xl);
-    background: var(--gradient-primary);
-    opacity: 0.3;
-    filter: blur(10px);
+    inset: -3px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
+    opacity: 0.25;
+    filter: blur(8px);
     z-index: -1;
 }
 
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
 .auth-title {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-    font-weight: 900;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: #0f172a;
+    font-weight: 800;
     letter-spacing: -0.02em;
 }
 
 .auth-subtitle {
     text-align: center;
-    color: var(--text-secondary);
-    margin-bottom: 3rem;
-    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
     line-height: 1.6;
 }
 
+/* ==========================================
+   ERROR MESSAGE
+   ========================================== */
 .error-message {
-    background: linear-gradient(135deg, var(--danger-bg), #fecaca);
-    color: var(--danger);
-    padding: 1rem 1.25rem;
-    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    color: #dc2626;
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
     margin-bottom: 1.5rem;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    border: 1px solid var(--danger);
+    gap: 0.5rem;
+    border: 1px solid #fecaca;
     font-weight: 600;
 }
 
+/* ==========================================
+   FORM ELEMENTS
+   ========================================== */
 .form-group {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-label {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.625rem;
+    color: #334155;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -135,110 +133,136 @@
 
 .input-icon {
     position: absolute;
-    left: 1.25rem;
+    left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--primary);
-    font-size: 1.25rem;
-    transition: var(--transition);
+    color: #0ea5e9;
+    font-size: 1.15rem;
+    transition: all 0.3s ease;
     z-index: 2;
     pointer-events: none;
 }
 
 .form-input {
     width: 100%;
-    height: 3.5rem;
-    padding: 1rem 1.25rem 1rem 3.5rem !important;
-    /* Force space for icon */
-    background: var(--bg-main);
-    border: 2px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    font-size: 1rem;
-    transition: var(--transition);
-    color: var(--text-primary);
+    height: 3.25rem;
+    padding: 0.875rem 1rem 0.875rem 3rem !important;
+    background: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #0f172a;
     font-weight: 500;
 }
 
 .form-input::placeholder {
-    color: var(--text-tertiary);
+    color: #94a3b8;
     font-weight: 400;
+}
+
+.form-input:hover {
+    background: #f1f5f9;
 }
 
 .form-input:focus {
     background: white;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
     outline: none;
 }
 
 .input-wrapper:focus-within .input-icon {
-    color: var(--primary);
+    color: #0369a1;
     transform: translateY(-50%) scale(1.1);
 }
 
+/* ==========================================
+   AUTH OPTIONS & LINKS
+   ========================================== */
 .auth-options {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .forgot-link {
-    font-size: 0.9rem;
-    color: var(--primary);
+    font-size: 0.875rem;
+    color: #0ea5e9;
     font-weight: 600;
-    transition: var(--transition);
+    transition: all 0.2s ease;
 }
 
 .forgot-link:hover {
-    color: var(--primary-dark);
+    color: #0369a1;
     text-decoration: underline;
 }
 
+/* ==========================================
+   SUBMIT BUTTON
+   ========================================== */
 .auth-card .btn-primary {
     width: 100%;
+    height: 3.25rem;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    height: 3.5rem;
-    font-size: 1.05rem;
+    gap: 0.5rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-top: 0.5rem;
-    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(12, 74, 110, 0.3);
 }
 
 .auth-card .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(79, 70, 229, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(12, 74, 110, 0.4);
 }
 
+.auth-card .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
+   AUTH SWITCH (Register link)
+   ========================================== */
 .auth-switch {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     text-align: center;
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-light);
+    font-size: 0.9rem;
+    color: #64748b;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
 }
 
 .auth-switch a {
-    color: var(--primary);
+    color: #0ea5e9;
     font-weight: 700;
-    margin-left: 0.375rem;
-    transition: var(--transition);
+    margin-left: 0.25rem;
+    transition: all 0.2s ease;
 }
 
 .auth-switch a:hover {
-    color: var(--primary-dark);
+    color: #0369a1;
     text-decoration: underline;
 }
 
-/* Animations */
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
 .animate-scale-in {
-    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes scaleIn {
+@keyframes cardEntrance {
     from {
         opacity: 0;
-        transform: scale(0.95) translateY(20px);
+        transform: scale(0.96) translateY(20px);
     }
 
     to {
@@ -247,41 +271,131 @@
     }
 }
 
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-/* Responsive */
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
 @media (max-width: 640px) {
+    .auth-container {
+        padding: 1rem;
+    }
+
     .auth-card {
-        padding: 2.5rem 1.75rem;
-        max-width: 100%;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
     }
 
     .auth-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .logo-circle {
-        width: 70px;
-        height: 70px;
-        font-size: 2rem;
+        width: 64px;
+        height: 64px;
+        font-size: 1.5rem;
     }
 
     .form-input {
         height: 3rem;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
 
     .auth-card .btn-primary {
         height: 3rem;
     }
+}
+
+/* ==========================================
+   DARK MODE SUPPORT
+   ========================================== */
+[data-theme="dark"] .auth-card,
+.dark-mode .auth-card {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(148, 163, 184, 0.2);
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(148, 163, 184, 0.1);
+}
+
+[data-theme="dark"] .auth-title,
+.dark-mode .auth-title {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .auth-subtitle,
+.dark-mode .auth-subtitle {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .form-label,
+.dark-mode .form-label {
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .form-input,
+.dark-mode .form-input {
+    background: rgba(15, 23, 42, 0.8);
+    color: #f1f5f9;
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+[data-theme="dark"] .form-input::placeholder,
+.dark-mode .form-input::placeholder {
+    color: #64748b;
+}
+
+[data-theme="dark"] .form-input:hover,
+.dark-mode .form-input:hover {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+[data-theme="dark"] .form-input:focus,
+.dark-mode .form-input:focus {
+    background: rgba(15, 23, 42, 1);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+}
+
+[data-theme="dark"] .input-icon,
+.dark-mode .input-icon {
+    color: #22d3ee;
+}
+
+[data-theme="dark"] .auth-switch,
+.dark-mode .auth-switch {
+    color: #94a3b8;
+    border-top-color: rgba(148, 163, 184, 0.2);
+}
+
+[data-theme="dark"] .auth-switch a,
+.dark-mode .auth-switch a {
+    color: #22d3ee;
+}
+
+[data-theme="dark"] .forgot-link,
+.dark-mode .forgot-link {
+    color: #22d3ee;
+}
+
+[data-theme="dark"] .error-message,
+.dark-mode .error-message {
+    background: rgba(127, 29, 29, 0.3);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: #fca5a5;
+}
+
+[data-theme="dark"] .logo-circle,
+.dark-mode .logo-circle {
+    background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #22d3ee 100%);
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
+}
+
+[data-theme="dark"] .auth-card .btn-primary,
+.dark-mode .auth-card .btn-primary {
+    background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+}
+
+[data-theme="dark"] .auth-card .btn-primary:hover,
+.dark-mode .auth-card .btn-primary:hover {
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.45);
 }

@@ -4,7 +4,7 @@ const candidatureController = require('../controllers/candidatureController');
 const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
 
 // Public route for formateurs to apply
-router.post('/public', candidatureController.submitCandidature);
+router.post('/', candidatureController.submitCandidature);
 
 // Admin routes to manage applications
 router.get('/', verifyToken, isAdmin, candidatureController.getAllCandidatures);

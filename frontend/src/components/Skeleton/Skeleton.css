@@ -1,0 +1,221 @@
+/* ==========================================
+   SKELETON LOADERS - Shimmer Animation
+   ========================================== */
+
+/* Base shimmer animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(90deg,
+            #f1f5f9 0%,
+            #e2e8f0 25%,
+            #f1f5f9 50%,
+            #e2e8f0 75%,
+            #f1f5f9 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite ease-in-out;
+}
+
+/* Skeleton Card */
+.skeleton-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.skeleton-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-title-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skeleton-title {
+    height: 18px;
+    width: 65%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-subtitle {
+    height: 14px;
+    width: 45%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    animation-delay: 0.1s;
+}
+
+.skeleton-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 10px;
+}
+
+.skeleton-line {
+    height: 12px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.skeleton-line:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.skeleton-line:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.skeleton-footer {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.skeleton-button {
+    flex: 1;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Skeleton Table Row */
+.skeleton-row td {
+    padding: 1rem 1.25rem;
+}
+
+.skeleton-cell {
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Skeleton Stat Card */
+.skeleton-stat {
+    background: white;
+    padding: 1.75rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.skeleton-stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-stat-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skeleton-stat-value {
+    height: 28px;
+    width: 50%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-stat-label {
+    height: 14px;
+    width: 80%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    animation-delay: 0.1s;
+}
+
+/* ==========================================
+   DARK MODE
+   ========================================== */
+[data-theme="dark"] .skeleton-card,
+.dark-mode .skeleton-card {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .skeleton-avatar,
+[data-theme="dark"] .skeleton-title,
+[data-theme="dark"] .skeleton-subtitle,
+[data-theme="dark"] .skeleton-line,
+[data-theme="dark"] .skeleton-button,
+[data-theme="dark"] .skeleton-cell,
+[data-theme="dark"] .skeleton-stat-icon,
+[data-theme="dark"] .skeleton-stat-value,
+[data-theme="dark"] .skeleton-stat-label,
+.dark-mode .skeleton-avatar,
+.dark-mode .skeleton-title,
+.dark-mode .skeleton-subtitle,
+.dark-mode .skeleton-line,
+.dark-mode .skeleton-button,
+.dark-mode .skeleton-cell,
+.dark-mode .skeleton-stat-icon,
+.dark-mode .skeleton-stat-value,
+.dark-mode .skeleton-stat-label {
+    background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+    background-size: 200% 100%;
+}
+
+[data-theme="dark"] .skeleton-body,
+.dark-mode .skeleton-body {
+    background: rgba(15, 23, 42, 0.5);
+}
+
+[data-theme="dark"] .skeleton-stat,
+.dark-mode .skeleton-stat {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(148, 163, 184, 0.15);
+}

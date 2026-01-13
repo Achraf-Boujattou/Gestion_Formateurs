@@ -1,9 +1,13 @@
-/* --- Unified Table Premium Styles --- */
+/* ==========================================
+   ADMIN FORMATIONS - Academic Design with Dark Mode
+   ========================================== */
+
+/* Table styles */
 .table-responsive {
-    background: var(--bg-card);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-premium);
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     overflow: hidden;
 }
 
@@ -18,23 +22,23 @@
 .users-table th,
 .common-table th {
     background: #f8fafc;
-    padding: 1.25rem 1.75rem;
+    padding: 1rem 1.25rem;
     text-align: left;
     font-weight: 700;
-    color: var(--text-muted);
+    color: #475569;
     text-transform: uppercase;
     font-size: 0.75rem;
-    letter-spacing: 0.075em;
-    border-bottom: 2px solid var(--border-light);
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .formations-table td,
 .users-table td,
 .common-table td {
-    padding: 1.25rem 1.75rem;
-    border-bottom: 1px solid var(--border-light);
-    color: var(--text-main);
-    font-size: 0.95rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.9rem;
 }
 
 .formations-table tr:hover td,
@@ -43,111 +47,272 @@
     background-color: #f8fafc;
 }
 
-/* --- Badges --- */
+/* Badges - Academic Colors */
 .badge-premium {
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.02em;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .badge-blue {
-    background: #eff6ff;
-    color: #2563eb;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    color: #0369a1;
 }
 
 .badge-green {
-    background: #ecfdf5;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
     color: #059669;
 }
 
 .badge-red {
-    background: #fef2f2;
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
     color: #dc2626;
 }
 
 .badge-amber {
-    background: #fffbeb;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
     color: #b45309;
 }
 
-/* --- Forms & Modals --- */
-.modal-overlay {
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+/* Form Sections */
+.form-sections-container {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
-.modal-content {
-    background: white;
-    border-radius: var(--radius-2xl);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.modal-content.large {
+    max-width: 800px;
 }
 
-.form-input-premium {
-    width: 100%;
-    padding: 0.85rem 1.25rem;
-    border: 1.5px solid var(--border-base);
-    border-radius: var(--radius-lg);
+.form-section-modern {
     background: #f8fafc;
-    transition: var(--transition);
-    font-size: 1rem;
-    font-weight: 500;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
 }
 
-.form-input-premium:focus {
+.section-header-mini {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section-header-mini svg {
+    color: #0ea5e9;
+    font-size: 1.15rem;
+}
+
+.section-header-mini span {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon input,
+.input-with-icon select,
+.input-with-icon textarea {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
     background: white;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    color: #0f172a;
+}
+
+.input-with-icon input:focus,
+.input-with-icon select:focus,
+.input-with-icon textarea:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
     outline: none;
 }
 
-.form-label-premium {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: 0.6rem;
-    display: block;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+.field-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    transition: all 0.25s ease;
 }
 
-/* --- Action Buttons --- */
-.btn-action-premium {
-    width: 2.75rem;
-    height: 2.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1.2rem;
+.input-with-icon input:focus+.field-icon,
+.input-with-icon select:focus+.field-icon {
+    color: #0ea5e9;
 }
 
-.btn-action-edit {
-    background: #eff6ff;
-    color: #2563eb;
+/* Responsive */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1;
+    }
 }
 
-.btn-action-edit:hover {
-    background: #dbeafe;
-    transform: translateY(-2px);
+/* ==========================================
+   DARK MODE - Tables & Forms
+   ========================================== */
+[data-theme="dark"] .table-responsive,
+.dark-mode .table-responsive {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(148, 163, 184, 0.15);
 }
 
-.btn-action-delete {
-    background: #fef2f2;
-    color: #dc2626;
+[data-theme="dark"] .formations-table th,
+[data-theme="dark"] .users-table th,
+[data-theme="dark"] .common-table th,
+.dark-mode .formations-table th,
+.dark-mode .users-table th,
+.dark-mode .common-table th {
+    background: rgba(15, 23, 42, 0.5);
+    color: #94a3b8;
+    border-bottom-color: rgba(148, 163, 184, 0.15);
 }
 
-.btn-action-delete:hover {
-    background: #fee2e2;
-    transform: translateY(-2px);
+[data-theme="dark"] .formations-table td,
+[data-theme="dark"] .users-table td,
+[data-theme="dark"] .common-table td,
+.dark-mode .formations-table td,
+.dark-mode .users-table td,
+.dark-mode .common-table td {
+    color: #cbd5e1;
+    border-bottom-color: rgba(148, 163, 184, 0.1);
+}
+
+[data-theme="dark"] .formations-table tr:hover td,
+[data-theme="dark"] .users-table tr:hover td,
+[data-theme="dark"] .common-table tr:hover td,
+.dark-mode .formations-table tr:hover td,
+.dark-mode .users-table tr:hover td,
+.dark-mode .common-table tr:hover td {
+    background: rgba(14, 165, 233, 0.05);
+}
+
+[data-theme="dark"] .badge-blue,
+.dark-mode .badge-blue {
+    background: rgba(14, 165, 233, 0.2);
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .badge-green,
+.dark-mode .badge-green {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+[data-theme="dark"] .badge-red,
+.dark-mode .badge-red {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+[data-theme="dark"] .badge-amber,
+.dark-mode .badge-amber {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+[data-theme="dark"] .form-section-modern,
+.dark-mode .form-section-modern {
+    background: rgba(15, 23, 42, 0.5);
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .section-header-mini,
+.dark-mode .section-header-mini {
+    border-bottom-color: rgba(148, 163, 184, 0.15);
+}
+
+[data-theme="dark"] .section-header-mini span,
+.dark-mode .section-header-mini span {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .section-header-mini svg,
+.dark-mode .section-header-mini svg {
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .form-group label,
+.dark-mode .form-group label {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .input-with-icon input,
+[data-theme="dark"] .input-with-icon select,
+[data-theme="dark"] .input-with-icon textarea,
+.dark-mode .input-with-icon input,
+.dark-mode .input-with-icon select,
+.dark-mode .input-with-icon textarea {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .input-with-icon input:focus,
+[data-theme="dark"] .input-with-icon select:focus,
+[data-theme="dark"] .input-with-icon textarea:focus,
+.dark-mode .input-with-icon input:focus,
+.dark-mode .input-with-icon select:focus,
+.dark-mode .input-with-icon textarea:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+[data-theme="dark"] .field-icon,
+.dark-mode .field-icon {
+    color: #64748b;
+}
+
+[data-theme="dark"] .input-with-icon input:focus+.field-icon,
+.dark-mode .input-with-icon input:focus+.field-icon {
+    color: #38bdf8;
 }
